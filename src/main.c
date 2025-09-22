@@ -6,5 +6,6 @@ int main(int ac, char **av)
 
     init_cub(ac, av, &cub);
     parsing(&cub);
+    check_textures(&cub);
 	return (EXIT_SUCCESS);
 }

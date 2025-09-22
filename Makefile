@@ -14,7 +14,8 @@ SRC = \
 	$(SRC_DIR)/error/error.c \
 	$(SRC_DIR)/init/check_input.c \
 	$(SRC_DIR)/init/init.c \
-	$(SRC_DIR)/parsing/map.c
+	$(SRC_DIR)/parsing/parsing.c \
+	$(SRC_DIR)/parsing/check_textures.c
 
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

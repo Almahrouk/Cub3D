@@ -9,7 +9,6 @@ void check_file(t_cub *cub)
     cub->line = get_next_line(cub->fd);
     if (!cub->line)
         ft_exit(cub, "Error\nempty file\n", EMPTY_FILE_ERROR);
-    // close(cub->fd);
 }
 
 void check_input(int ac, char **av, t_cub *cub)
@@ -20,25 +19,3 @@ void check_input(int ac, char **av, t_cub *cub)
         ft_exit_input("Error\nfile must be .cub\n", INPUT_ERROR);
     cub->file_name = av[1];
 }
-
-/*
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-
-int main() {
-    int fd = open("example.cub", O_RDONLY);
-
-    if (fd == -1) {
-        perror("Error opening file");
-        return (1);
-    }
-
-    // File opened successfully
-    printf("File opened successfully! File descriptor: %d\n", fd);
-
-    close(fd);
-    return 0;
-}
-
-*/

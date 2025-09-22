@@ -1,7 +1,7 @@
-NO	./path_to_the_north_texture.png
-SO ./path_to_the_south_texture.png
-WE ./path_to_the_west_texture.png
-EA ./path_to_the_east_texture.png
+SO /mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/south_texture.xpm
+WE /mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/west_texture.xpm
+	NO	/mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/north_texture.xpm
+EA /mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/east_texture.xpm
 
 
 F 220,100,0
