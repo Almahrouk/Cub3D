@@ -1,15 +1,21 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <math.h>
 # include <string.h> // strerror
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <sys/time.h> // gettimeofday
-# include <math.h>
 # include "../libft/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 
+# define TILE_SIZE	20
 // use echo $?
 typedef enum e_error
 {
@@ -33,7 +39,34 @@ typedef struct s_cub
 	char *south_path;
 	char *west_path;
 	char *east_path;
+
+	char	**map;
+	int		map_w;
+	int 	map_h;
+
+	char	p_dir;
+	double	plane_x;
+	double	plane_y;
 }	t_cub;
+
+// typedef struct s_player
+// {
+// 	double	x;
+// 	double	y;
+// 	double	dir_x;
+// 	double	dir_y;
+// 	double	plane_x;
+// 	double	plane_y;
+// } t_player;
+
+typedef struct s_game
+{
+	mlx_t	*mlx;
+	mlx_image_t	*img;
+	t_cub	*cub;
+	//char	**map;
+	//t_player	p;
+}	t_game;
 
 void init(t_cub *cub);
 void init_cub(int ac, char **av, t_cub *cub);

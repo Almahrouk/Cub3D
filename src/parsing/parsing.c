@@ -49,6 +49,32 @@ void parse_line(t_cub *cub, char *line)
         return;
 }
 
+	 // abeer testing
+void parse_map(t_cub *cub)
+{
+    char    *line;
+    t_list  *lines = NULL;
+    int     i = 0;
+
+    while ((line = get_next_line(cub->fd)))
+    {
+        if (ft_strchr(line, '1') || ft_strchr(line, '0'))
+            ft_lstadd_back(&lines, ft_lstnew(ft_strdup(line)));
+        free(line);
+    }
+    cub->map_height = ft_lstsize(lines);
+    cub->map = malloc(sizeof(char *) * (cub->map_height + 1));
+    while (lines)
+    {
+        cub->map[i++] = lines->content;
+        t_list *tmp = lines;
+        lines = lines->next;
+        free(tmp);
+    }
+    cub->map[i] = NULL;
+}
+//
+
 void parsing(t_cub *cub)
 {
     if (cub->line)

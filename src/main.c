@@ -2,17 +2,21 @@
 
 int main(int ac, char **av)
 {
-	// t_cub cub;
+	 t_cub cub;
+	 t_game	game;
 
-	// init_cub(ac, av, &cub);
-	// parsing(&cub);
-	// check_textures(&cub);
-	(void)ac;
-	(void)av;
-	mlx_t *mlx = mlx_init(800, 600, "cub3D", true);
+	init_cub(ac, av, &cub);
+	parsing(&cub);
+	parse_map(&cub);
+	//check_textures(&cub);
+	
+	game.mlx = mlx_init(800, 600, "cub3D", true);
 	if (!mlx)
 		return (EXIT_FAILURE);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	game.img = mlx_new_image(game.mlx, 800, 600);
+	mlx_image_to_window(game.mlx, game.img, 0 ,0);
+	draw_map(&game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
 	return (EXIT_SUCCESS);
 }
