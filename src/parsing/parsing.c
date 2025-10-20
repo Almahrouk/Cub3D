@@ -62,8 +62,8 @@ void parse_map(t_cub *cub)
             ft_lstadd_back(&lines, ft_lstnew(ft_strdup(line)));
         free(line);
     }
-    cub->map_height = ft_lstsize(lines);
-    cub->map = malloc(sizeof(char *) * (cub->map_height + 1));
+    cub->map_h = ft_lstsize(lines);
+    cub->map = malloc(sizeof(char *) * (cub->map_h + 1));
     while (lines)
     {
         cub->map[i++] = lines->content;

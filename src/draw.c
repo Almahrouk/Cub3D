@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-void    draw_square(t_game *game, int x, int y, uint23_t color)
+void    draw_square(t_game *game, int x, int y, uint32_t color)
 {
     int i;
     int j;
@@ -11,7 +11,7 @@ void    draw_square(t_game *game, int x, int y, uint23_t color)
         j = 0;
         while (j < TILE_SIZE)
         {
-            mlx_put_pixel(game->img, x + j, y + i, color)
+            mlx_put_pixel(game->img, x + j, y + i, color);
         }
         i++;
     }
@@ -30,9 +30,9 @@ void    draw_map(t_game *game)
         while (map[y][x])
         {
             if (map[y][x] == '1')
-                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, 0x808080FF)
+                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, 0x808080FF);
             else
-                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, 0xFFFFFFFF)
+                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, 0xFFFFFFFF);
             x++;
         }
         y++;

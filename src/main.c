@@ -11,7 +11,7 @@ int main(int ac, char **av)
 	//check_textures(&cub);
 	
 	game.mlx = mlx_init(800, 600, "cub3D", true);
-	if (!mlx)
+	if (!game.mlx)
 		return (EXIT_FAILURE);
 	game.img = mlx_new_image(game.mlx, 800, 600);
 	mlx_image_to_window(game.mlx, game.img, 0 ,0);

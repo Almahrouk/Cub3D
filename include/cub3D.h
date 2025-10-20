@@ -5,6 +5,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdint.h>
 # include <math.h>
 # include <string.h> // strerror
 # include <sys/types.h>
@@ -45,8 +46,8 @@ typedef struct s_cub
 	int 	map_h;
 
 	char	p_dir;
-	double	plane_x;
-	double	plane_y;
+	double	player_x;
+	double	player_y;
 }	t_cub;
 
 // typedef struct s_player
@@ -68,19 +69,19 @@ typedef struct s_game
 	//t_player	p;
 }	t_game;
 
-void init(t_cub *cub);
-void init_cub(int ac, char **av, t_cub *cub);
+void	init(t_cub *cub);
+void	init_cub(int ac, char **av, t_cub *cub);
 
-void check_file(t_cub *cub);
-void check_input(int ac, char **av, t_cub *map);
+void	check_file(t_cub *cub);
+void	check_input(int ac, char **av, t_cub *map);
 
-void ft_exit(t_cub *cub, char *message, int errno);
-void ft_exit_input(char *message, int errno);
+void	ft_exit(t_cub *cub, char *message, int errno);
+void	ft_exit_input(char *message, int errno);
 
-void parsing(t_cub *cub);
-void check_textures(t_cub *cub);
+void	parsing(t_cub *cub);
+void	check_textures(t_cub *cub);
 
-
-
+void	parse_map(t_cub *cub);
+void	draw_map(t_game *game);
 
 #endif
