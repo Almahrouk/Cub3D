@@ -10,6 +10,7 @@ int main(int ac, char **av)
 	parse_map(&cub);
 	//check_textures(&cub);
 	
+	game.cub = &cub;
 	game.mlx = mlx_init(800, 600, "cub3D", true);
 	if (!game.mlx)
 		return (EXIT_FAILURE);

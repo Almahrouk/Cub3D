@@ -9,6 +9,7 @@ void init(t_cub *cub)
     cub->south_path = NULL;
     cub->west_path = NULL;
     cub->east_path = NULL;
+    
 }
 
 void init_cub(int ac, char **av, t_cub *cub)

@@ -12,6 +12,7 @@ void    draw_square(t_game *game, int x, int y, uint32_t color)
         while (j < TILE_SIZE)
         {
             mlx_put_pixel(game->img, x + j, y + i, color);
+            j++;
         }
         i++;
     }
