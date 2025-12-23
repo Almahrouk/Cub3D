@@ -16,7 +16,11 @@
 # include "../libft/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 
-# define TILE_SIZE	20
+# define MINIMAP_W	100
+# define MINIMAP_H	100
+# define WIN_W		1000
+# define WIN_H		800
+# define TILE_SIZE	64
 // use echo $?
 typedef enum e_error
 {
@@ -31,23 +35,51 @@ typedef enum e_error
 	TEXTURE_OPEN_ERROR
 }	t_error;
 
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}	t_vector;
+
+typedef struct s_data
+{
+	char			*no;
+	char			*so;
+	char			*we;
+	char			*ea;
+	char			**map;
+	/*t_cub			*cub;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*west;
+	mlx_texture_t	*east;*/
+	//char	**map;
+	//t_player	p;
+	int		player_x;
+	int		player_y;
+}	t_data;
+
 typedef struct s_cub
 {
-    int fd;
-	char *line;
-	char *file_name;
-	char *north_path;
-	char *south_path;
-	char *west_path;
-	char *east_path;
+    //int fd;
+	//char *line;
+	//char *file_name;
+	mlx_t	*mlx;
+	mlx_image_t		*img;
+	mlx_texture_t	*texture;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*west;
+	mlx_texture_t	*east;
+	t_vector		pos;
+	//char	**map;
+	//int		map_w;
+	//int 	map_h;
 
-	char	**map;
-	int		map_w;
-	int 	map_h;
-
-	char	p_dir;
-	double	player_x;
-	double	player_y;
+	//char	p_dir;
+	t_data	*data;
 }	t_cub;
 
 // typedef struct s_player
@@ -59,15 +91,6 @@ typedef struct s_cub
 // 	double	plane_x;
 // 	double	plane_y;
 // } t_player;
-
-typedef struct s_game
-{
-	mlx_t	*mlx;
-	mlx_image_t	*img;
-	t_cub	*cub;
-	//char	**map;
-	//t_player	p;
-}	t_game;
 
 void	init(t_cub *cub);
 void	init_cub(int ac, char **av, t_cub *cub);
@@ -82,6 +105,6 @@ void	parsing(t_cub *cub);
 void	check_textures(t_cub *cub);
 
 void	parse_map(t_cub *cub);
-void	draw_map(t_game *game);
+//void	draw_map(t_game *game);
 
 #endif
