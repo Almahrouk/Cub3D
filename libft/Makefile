@@ -33,7 +33,7 @@ CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-all: ${NAME}
+all: ${NAME} bonus
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
