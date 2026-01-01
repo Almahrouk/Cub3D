@@ -18,8 +18,16 @@ SRC = \
 	$(SRC_DIR)/init/check_input.c \
 	$(SRC_DIR)/init/init.c \
 	$(SRC_DIR)/parsing/parsing.c \
+	$(SRC_DIR)/parsing/parsing_utils.c \
+	$(SRC_DIR)/parsing/parsing_header.c \
 	$(SRC_DIR)/parsing/check_textures.c \
-	$(SRC_DIR)/draw.c 
+	$(SRC_DIR)/parsing/map_validation.c \
+	$(SRC_DIR)/parsing/map_helpers.c \
+	$(SRC_DIR)/parsing/flood_fill.c \
+	$(SRC_DIR)/parsing/build_map.c \
+	$(SRC_DIR)/parsing/parsing_helper.c \
+	$(SRC_DIR)/free/free.c \
+	$(SRC_DIR)/draw.c
 
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

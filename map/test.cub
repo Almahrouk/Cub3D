@@ -1,8 +1,7 @@
-SO /mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/south_texture.xpm
-WE /mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/west_texture.xpm
-	NO	/mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/north_texture.xpm
-EA /mnt/c/Users/almah/Documents/GitHub/Cub3D/texture/east_texture.xpm
-
+SO texture/south_texture.xpm
+WE texture/west_texture.xpm
+NO texture/north_texture.xpm
+EA texture/east_texture.xpm
 
 F 220,100,0
 C 225,30,0
