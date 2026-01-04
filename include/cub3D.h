@@ -57,27 +57,29 @@ typedef struct s_data
 	mlx_texture_t	*east;*/
 	//char	**map;
 	//t_player	p;
+	char	pov_player;
 	int		player_x;
 	int		player_y;
 }	t_data;
 
 typedef struct s_cub
 {
-    //int fd;
-	//char *line;
-	//char *file_name;
-	mlx_t	*mlx;
+    int fd;
+	char *line;
+	char *file_name;
+	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_texture_t	*texture;
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
-	mlx_texture_t	*west;
-	mlx_texture_t	*east;
+	mlx_texture_t	*north_path;
+	mlx_texture_t	*south_path;
+	mlx_texture_t	*west_path;
+	mlx_texture_t	*east_path;
 	t_vector		pos;
+	t_vector		dir;
+	t_vector		cam_plane;
 	//char	**map;
-	//int		map_w;
-	//int 	map_h;
-
+	int		map_w;
+	int		map_h;
 	//char	p_dir;
 	t_data	*data;
 }	t_cub;
@@ -106,5 +108,6 @@ void	check_textures(t_cub *cub);
 
 void	parse_map(t_cub *cub);
 //void	draw_map(t_game *game);
+int check_invalid_char(char c);
 
 #endif

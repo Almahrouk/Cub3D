@@ -63,17 +63,43 @@ void parse_map(t_cub *cub)
         free(line);
     }
     cub->map_h = ft_lstsize(lines);
-    cub->map = malloc(sizeof(char *) * (cub->map_h + 1));
+    cub->data->map = malloc(sizeof(char *) * (cub->map_h + 1));
     while (lines)
     {
-        cub->map[i++] = lines->content;
+        cub->data->map[i++] = lines->content;
         t_list *tmp = lines;
         lines = lines->next;
         free(tmp);
     }
-    cub->map[i] = NULL;
+    cub->data->map[i] = NULL;
 }
 //
+static void    val_player(t_cub *cub)
+{
+    int i;
+    int j;
+    int player_c;
+
+    i = 0;
+    player_c = 0;
+    
+    while (cub->data->map[i][j])
+    {
+        if(!check_invalid_char(cub->data->map[i][j]));//
+        	//ft_exit(cub, "Error\ninvalid map character\n", MAP_ERROR);
+        if(cub->data->map[i][j] == 'N' || cub->data->map[i][j] == 'S'
+            || cub->data->map[i][j] == 'E' || cub->data->map[i][j] == 'W')
+        {
+            player_c++;
+            cub->data->pov_player = cub->data->map[i][j];
+            cub->data->player_y = i;
+            cub->data->player_x = j;
+            cub->data->map[i][j] = '0';
+        }
+        j++;
+    }
+    i++;
+}
 
 void parsing(t_cub *cub)
 {
