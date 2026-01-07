@@ -27,7 +27,9 @@ SRC = \
 	$(SRC_DIR)/parsing/build_map.c \
 	$(SRC_DIR)/parsing/parsing_helper.c \
 	$(SRC_DIR)/free/free.c \
-	$(SRC_DIR)/draw.c
+	$(SRC_DIR)/setup/draw.c \
+	$(SRC_DIR)/setup/image.c \
+	$(SRC_DIR)/setup/player.c 
 
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

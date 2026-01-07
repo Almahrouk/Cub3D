@@ -60,6 +60,7 @@ typedef struct s_data
 	char			*we;
 	char			*ea;
 	char			**map;
+	char			pov_player;
 	int				player_x;
 	int				player_y;
 }	t_data;
@@ -84,11 +85,13 @@ typedef struct s_cub
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_texture_t	*texture;
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
-	mlx_texture_t	*west;
-	mlx_texture_t	*east;
+	mlx_texture_t	*north_p;
+	mlx_texture_t	*south_p;
+	mlx_texture_t	*west_p;
+	mlx_texture_t	*east_p;
 	t_vector		pos;
+	t_vector		dir;
+	t_vector		cam_plane;
 	t_data			*data;
 	int				test_mode;
 	int				error_code;
@@ -156,12 +159,12 @@ int		parse_header_line(t_cub *cub, char *line);
 void	ff_free(t_ff *ff);
 void	parse_texture(t_cub *cub, char **dest, char *line, int i);
 void	parse_color(t_cub *cub, char **dest, char *line, int i);
-int	set_texture(t_tex_set *a);
-int	parse_texture_line(t_cub *cub, char *line, int i);
-int	parse_color_line(t_cub *cub, char *line, int i);
-int	parse_header_line(t_cub *cub, char *line);
 
+int		parse_texture_line(t_cub *cub, char *line, int i);
+int		parse_color_line(t_cub *cub, char *line, int i);
+int		parse_header_line(t_cub *cub, char *line);
 
+int		set_texture(t_tex_set *a);
 
 
 #endif

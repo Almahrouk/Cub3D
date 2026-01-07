@@ -1,3 +1,0 @@
-fix:
-[almah@Almahrouk Cub3D]$ ./cub3D ./map/good/works.cub
-[almah@Almahrouk Cub3D]$ ./cub3D ./map/bad/f.cub

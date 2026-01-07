@@ -63,6 +63,11 @@ int	init_game(t_cub *game)
 		return (EXIT_FAILURE);
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		return (EXIT_FAILURE);
+	load_tex(game);
+	setup(game->mlx);
+	mlx_key_hook(game->mlx, hook_key_press, game);
+	mlx_loop_hook(game->mlx, draw_playerview, game);
+	mlx_close_hook(game->mlx, hook_close, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
 	return (EXIT_SUCCESS);
