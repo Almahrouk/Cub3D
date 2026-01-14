@@ -33,7 +33,7 @@ static int	ft_count_words(char const *s, char sep)
 	return (word_count);
 }
 
-static void	ft_free_split_recursive(char **split, size_t index)
+void	ft_free_split_recursive(char **split, size_t index)
 {
 	if (split[index] != NULL)
 	{

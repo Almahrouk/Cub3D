@@ -1,0 +1,7 @@
+./cub3D ./map/good/works.cub
+ ./cub3D ./map/bad/f.cub
+in check_textures_paths
+{
+	//⚠️ Risky if path == NULL
+	//⚠️ Risky if path shorter than 4 chars
+}

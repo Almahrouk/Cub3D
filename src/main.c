@@ -81,6 +81,7 @@ int	main(int ac, char **av)
 	parsing(&cub);
 	// parse_map(&cub);
 	check_textures(&cub);
+	printf("hello8");
 	init_game(&cub);
 	return (EXIT_SUCCESS);
 }

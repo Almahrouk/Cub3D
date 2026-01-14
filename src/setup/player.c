@@ -14,6 +14,7 @@
 
 static void	define_initial_plane(t_cub *game)
 {
+	/**/
 	if (game->data->pov == 'N')
 	{
 		game->dir = create_vector(0, -1);
@@ -38,6 +39,12 @@ static void	define_initial_plane(t_cub *game)
 
 void	setup(t_cub *game)
 {
+	if (game->data->player_x < 0 || game->data->player_x >= game->map_w ||
+   	 	game->data->player_y < 0 || game->data->player_y >= game->map_h)
+	{
+		ft_exit(game, "Error: Player coordinates out of map bounds!", FAILD);
+	}
 	game->pos = create_vector(game->data->player_x + 0.5,
 			game->data->player_y + 0.5);
+	define_initial_plane(game);
 }

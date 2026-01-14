@@ -67,7 +67,7 @@ void    draw_wall(t_cub *game, t_dda *ray, int pix)
     if (wall.start_y < 0)
         wall.start_y = 0;
     if (wall.end_y >= WIN_H)
-        wall.end_y >= WIN_H - 1;
+        wall.end_y = WIN_H - 1;
     intersection_point(game, ray, &wall);
     find_tex_position_x(game, ray, &wall);
     wall.tex_pos = (wall.start_y - WIN_H / 2 + wall.h / 2)

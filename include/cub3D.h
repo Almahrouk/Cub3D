@@ -82,7 +82,7 @@ typedef struct s_data
 	char			*we;
 	char			*ea;
 	char			**map;
-	char			*pov;
+	char			pov;
 	int				player_x;
 	int				player_y;
 	char			*ceil_str;
@@ -171,53 +171,54 @@ typedef struct s_tex_set
 	char	*dup_err;
 }	t_tex_set;
 
-int		init_game(t_cub *game);
-void	run_parse_checks(t_cub *cub, char *path);
-void	test_map_child(char *path);
-void	test_map(char *path);
+int				init_game(t_cub *game);
+void			run_parse_checks(t_cub *cub, char *path);
+void			test_map_child(char *path);
+void			test_map(char *path);
 
-void	init(t_cub *cub);
-void	init_cub(int ac, char **av, t_cub *cub);
-void	print_bad(char *path, char *msg);
+void			init(t_cub *cub);
+void			init_cub(int ac, char **av, t_cub *cub);
+void			print_bad(char *path, char *msg);
 
-void	check_file(t_cub *cub);
-void	check_input(int ac, char **av, t_cub *map);
+void			check_file(t_cub *cub);
+void			check_input(int ac, char **av, t_cub *map);
 
-void	ft_exit(t_cub *cub, char *message, int errno);
-void	ft_exit_input(char *message, int errno);
+void			ft_exit(t_cub *cub, char *message, int errno);
+void			ft_exit_input(char *message, int errno);
 
-void	parsing(t_cub *cub);
-void	check_textures(t_cub *cub);
+void			parsing(t_cub *cub);
+void			check_textures(t_cub *cub);
 
-void	parse_map(t_cub *cub);
-void	map_error(t_cub *cub, char *message);
-void	strip_line_end(char *line);
-void	normalize_tabs(char *line);
-int		is_line_empty(char *line);
-int		is_map_char(char c);
-void	flood_fill(t_cub *cub, int start_x, int start_y);
-void	build_map(t_cub *cub, t_list *lines);
-void	handle_player_tile(t_cub *cub, int x, int y, int *player_count);
-void	check_map_tile(t_cub *cub, int x, int y, int *player_count);
-void	check_map_content(t_cub *cub);
-void	check_textures_open(t_cub *cub, char *path, char *msg);
+void			parse_map(t_cub *cub);
+void			map_error(t_cub *cub, char *message);
+void			strip_line_end(char *line);
+void			normalize_tabs(char *line);
+int				is_line_empty(char *line);
+int				is_map_char(char c);
+void			flood_fill(t_cub *cub, int start_x, int start_y);
+void			build_map(t_cub *cub, t_list *lines);
+void			handle_player_tile(t_cub *cub, int x, int y, int *player_count);
+void			check_map_tile(t_cub *cub, int x, int y, int *player_count);
+void			check_map_content(t_cub *cub);
+void			check_textures_open(t_cub *cub, char *path, char *msg);
 
-void	validate_map(t_cub *cub);
-int		is_map_line(char *line);
-int		parse_header_line(t_cub *cub, char *line);
-void	ff_free(t_ff *ff);
-void	parse_texture(t_cub *cub, char **dest, char *line, int i);
-void	parse_color(t_cub *cub, char **dest, char *line, int i);
-int		set_texture(t_tex_set *a);
-int		parse_texture_line(t_cub *cub, char *line, int i);
-int		parse_color_line(t_cub *cub, char *line, int i);
-int		parse_header_line(t_cub *cub, char *line);
+void			validate_map(t_cub *cub);
+int				is_map_line(char *line);
+int				parse_header_line(t_cub *cub, char *line);
+void			ff_free(t_ff *ff);
+void			free_memory(t_cub *cub);
+void			parse_texture(t_cub *cub, char **dest, char *line, int i);
+void			parse_color(t_cub *cub, char **dest, char *line, int i);
+int				set_texture(t_tex_set *a);
+int				parse_texture_line(t_cub *cub, char *line, int i);
+int				parse_color_line(t_cub *cub, char *line, int i);
+int				parse_header_line(t_cub *cub, char *line);
 
-//void	draw_map(t_game *game);
+//void			draw_map(t_cub *game);
 void			setup(t_cub *game);
 void			load_tex(t_cub *game);
 void			hook_key_press(mlx_key_data_t key_p, void *p);
-void    hook_close(void *p);
+void    		hook_close(void *p);
 bool			can_move_to(t_cub *game, float new_x, float new_y);
 int				get_signal(float v);
 t_vector		rotate_vector(t_vector v, float angle);
@@ -226,6 +227,13 @@ t_vector		mult_vector(t_vector v, double s);
 t_vector		add_vector(t_vector v1, t_vector v2);
 mlx_texture_t	*init_tex(char *path);
 void			draw_wall(t_cub *game, t_dda *ray, int pix);
-void    draw_view(void *p);
+void			draw_view(void *p);
 uint32_t		get_tex_color(mlx_texture_t *tex, int y, int x);
+uint32_t		parse_rgb(t_cub *cub, char *str);
+void			calculate_new_pos(t_cub *game, float *new_x, float *new_y);
+int				set_dir(float dir);
+void			calculate_delta_dist(t_dda *ray);
+void			calculate_dist_2side(t_cub *game, t_dda *ray);
+void			dda_algo(t_cub *game, t_dda *ray);
+
 #endif

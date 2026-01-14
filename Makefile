@@ -27,8 +27,16 @@ SRC = \
 	$(SRC_DIR)/parsing/build_map.c \
 	$(SRC_DIR)/parsing/parsing_helper.c \
 	$(SRC_DIR)/free/free.c \
-	$(SRC_DIR)/draw.c
-
+	$(SRC_DIR)/free/free_all.c \
+	$(SRC_DIR)/setup/image.c \
+	$(SRC_DIR)/setup/player.c \
+	$(SRC_DIR)/hooks/hook.c \
+	$(SRC_DIR)/graphic_draw/draw_view.c \
+	$(SRC_DIR)/graphic_draw/process_move.c \
+	$(SRC_DIR)/graphic_draw/rays.c \
+	$(SRC_DIR)/graphic_draw/victore.c \
+	$(SRC_DIR)/graphic_draw/walls.c
+# 	$(SRC_DIR)/setup/draw.c \
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

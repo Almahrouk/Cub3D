@@ -16,6 +16,10 @@ void	check_textures_paths(t_cub *cub, char *path, char *message)
 {
 	//⚠️ Risky if path == NULL
 	//⚠️ Risky if path shorter than 4 chars
+	/*
+	if (!path || ft_strlen(path) < 4)
+		ft_exit(cub, message, TEXTURE_PATH_ERROR);
+	*/
 	if (ft_strncmp(path + ft_strlen(path) - 4, ".png", 4) != 0
 		&& ft_strncmp(path + ft_strlen(path) - 4, ".xpm", 4) != 0)
 		ft_exit(cub, message, TEXTURE_PATH_ERROR);

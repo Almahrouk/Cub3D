@@ -28,6 +28,9 @@ void	init(t_cub *cub)
 	cub->south_t = NULL;
 	cub->north_t = NULL;
 	cub->frame = 0;
+	//cub->dir = ;
+	//cub->camera_plane = ;
+	//cub->pos = ;
 	cub->test_mode = 0;
 	cub->error_code = 0;
 	cub->error_message = NULL;
@@ -41,14 +44,14 @@ void	init(t_cub *cub)
 }
 void	init_data(t_cub *game)
 {
+	//If ANYONE EVER calls init_data() before ft_calloc, it WILL segfault.
 	game->data->ceil = 0;
 	game->data->floor = 0;
-	game->data->ceil_set = 0;
-	game->data->floor_set = 0;
+	game->data->ceil_str = NULL;
+	game->data->floor_str = NULL;
 	game->data->player_x = -1;
 	game->data->player_y = -1;
-	game->data->map = NULL;
-	game->data->pov = NULL;
+	game->data->pov = 0;
 	game->data->no = NULL;
 	game->data->so = NULL;
 	game->data->ea = NULL;

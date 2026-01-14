@@ -48,8 +48,7 @@ int	parse_color_line(t_cub *cub, char *line, int i)
 			cub->error_message = ft_strdup("Error\nduplicate F\n");
 			return (0);
 		}
-		parse_color(cub, &cub->data->floor, line, i);
-		cub->data->floor_str = 1;
+		parse_color(cub, &cub->data->floor_str, line, i);
 	}
 	else if (line[i] == 'C')
 	{
@@ -58,8 +57,7 @@ int	parse_color_line(t_cub *cub, char *line, int i)
 			cub->error_message = ft_strdup("Error\nduplicate C\n");
 			return (0);
 		}
-		parse_color(cub, &cub->data->ceil, line, i);
-		cub->data->ceil_str = 1;
+		parse_color(cub, &cub->data->ceil_str, line, i);
 	}
 	else
 		return (0);

@@ -6,7 +6,7 @@ void    process_result(t_cub *game)
     float   new_y;
 
     calculate_new_pos(game, &new_x, &new_y);
-    if (can_move(game, new_x, new_y))
+    if (can_move_to(game, new_x, new_y))
     {
         game->pos.x = new_x;
         game->pos.y = new_y;

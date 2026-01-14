@@ -15,9 +15,10 @@
 void	handle_player_tile(t_cub *cub, int x, int y, int *player_count)
 {
 	(*player_count)++;
-	cub->player_x = x;
-	cub->player_y = y;
+	cub->data->player_x = x;
+	cub->data->player_y = y;
 	cub->player_dir = cub->map[y][x];
+	cub->data->pov = cub->map[y][x];
 	cub->map[y][x] = '0';
 }
 
@@ -28,8 +29,7 @@ void	check_map_tile(t_cub *cub, int x, int y, int *player_count)
 	c = cub->map[y][x];
 	if (!is_map_char(c))
 		map_error(cub, "Error\ninvalid map character\n");
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == 'n' || c == 's' || c == 'e' || c == 'w')
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		handle_player_tile(cub, x, y, player_count);
 }
 
@@ -80,7 +80,7 @@ void	validate_map(t_cub *cub)
 			map_error(cub, "Error\nmap is not closed\n");
 		y++;
 	}
-	flood_fill(cub, cub->player_x, cub->player_y);
+	flood_fill(cub, cub->data->player_x, cub->data->player_y);
 }
 
 void	parse_map(t_cub *cub)

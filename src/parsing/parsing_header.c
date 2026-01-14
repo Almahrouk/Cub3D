@@ -27,12 +27,24 @@ uint32_t	parse_rgb(t_cub *cub, char *str)
 	int		b;
 
 	if (!str)
-		ft_exit(cub, "ERROR\nmissing color\n", INPUT_ERROR);
+		ft_exit(cub, "Error\nmissing color\n", INPUT_ERROR);
 	part = ft_split(str, ',');
 	if (!part || !part[0] || !part[1] || !part[2] || part[3])
 	{
-		ft_free_split();
+		if (part)
+			ft_free_split_recursive(part,0);
+		ft_exit(cub, "Error\ninvalid color format\n", INPUT_ERROR);
 	}
+	r = ft_atoi(part[0]);
+	g = ft_atoi(part[1]);
+	b = ft_atoi(part[2]);
+	if (!is_valid_rgb(r, g, b))
+	{
+		ft_free_split_recursive(part, 0);
+		ft_exit(cub, "Error\ncolor values must be 0-255\n", INPUT_ERROR);
+	}
+	ft_free_split_recursive(part, 0);
+	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 }
 
 void	parse_texture(t_cub *cub, char **dest, char *line, int i)
@@ -60,9 +72,6 @@ void	parse_color(t_cub *cub, char **dest, char *line, int i)
 {
 	int	start;
 	int	end;
-	int	r;
-	int	g;
-	int	b;
 
 	if (line[i + 1] != ' ' && line[i + 1] != '\t')
 		ft_exit(cub, "Error\ninvalid color format\n", PARSEING_TEXTURE_ERROR);
@@ -76,9 +85,8 @@ void	parse_color(t_cub *cub, char **dest, char *line, int i)
 	while (end > start && (line[end - 1] == ' ' || line[end - 1] == '\t'))
 		end--;
 	*dest = ft_substr(line, start, end - start);
-	if (sscanf(*dest, "%d,%d,%d", &r, &g, &b) != 3
-		|| r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		ft_exit(cub, "Error\ninvalid color values\n", PARSEING_TEXTURE_ERROR);
+	if (!*dest)
+		ft_exit(cub, "Error\ninvalid color values\n", FAILD);
 }
 
 int	set_texture(t_tex_set *a)
