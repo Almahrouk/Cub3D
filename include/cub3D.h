@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almah <almah@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abeer42 <abeer42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by almah             #+#    #+#             */
-/*   Updated: 2026/01/01 00:00:00 by almah            ###   ########.fr       */
+/*   Updated: 2026/01/13 23:23:10 by abeer42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # define WIN_W		1000
 # define WIN_H		800
 # define TILE_SIZE	64
-// use echo $?
+# define PI 3.141592653589793
+
 typedef enum e_error
 {
 	SUCCESS,
@@ -53,6 +54,27 @@ typedef struct s_vector
 	double	y;
 }	t_vector;
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+typedef struct s_dda
+{
+	int			hit_side;
+	float		perp_dist;
+	float		wall_hit;
+	float		plane_mult;
+	t_vector	dir;
+	t_vector	camera_pix;
+	t_vector	delta_dist;
+	t_vector	dist_side;
+	t_coord		map;
+	t_coord		step;	
+}	t_dda;
+
+
 typedef struct s_data
 {
 	char			*no;
@@ -60,39 +82,67 @@ typedef struct s_data
 	char			*we;
 	char			*ea;
 	char			**map;
-	char			pov_player;
+	char			*pov;
 	int				player_x;
 	int				player_y;
+	char			*ceil_str;
+	char			*floor_str;
+	uint32_t		floor;
+	uint32_t		ceil;
 }	t_data;
+
+typedef struct s_key
+{
+	bool	w;
+	bool	s;
+	bool	a;
+	bool	d;
+	bool	l;
+	bool	r;
+
+}	t_key;
+
+typedef struct s_wall
+{
+	int		h;
+	int		start_y;
+	int		end_y;
+	int		tex_x;
+	int		tex_y;
+	float	point_x;
+	float	tex_step;
+	float	tex_pos;	
+}	t_wall;
 
 typedef struct s_cub
 {
 	int				fd;
 	char			*line;
 	char			*file_name;
-	char			*north_path;
-	char			*south_path;
-	char			*west_path;
-	char			*east_path;
-	char			*floor_color;
-	char			*ceiling_color;
+	//char			*north_path;//
+	//char			*south_path;//
+	//char			*west_path;//
+	//char			*east_path;//
 	char			**map;
 	int				map_w;
 	int				map_h;
-	int				player_x;
-	int				player_y;
+	//int				player_x;
+	//int				player_y;
 	char			player_dir;
+	int				hit_side;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	mlx_texture_t	*texture;
-	mlx_texture_t	*north_p;
-	mlx_texture_t	*south_p;
-	mlx_texture_t	*west_p;
-	mlx_texture_t	*east_p;
+	mlx_texture_t	*north_t;
+	mlx_texture_t	*south_t;
+	mlx_texture_t	*west_t;
+	mlx_texture_t	*east_t;
 	t_vector		pos;
 	t_vector		dir;
-	t_vector		cam_plane;
+	t_vector		camera_plane;
+	float			frame;
 	t_data			*data;
+	t_key			keys;
 	int				test_mode;
 	int				error_code;
 	char			*error_message;
@@ -121,7 +171,7 @@ typedef struct s_tex_set
 	char	*dup_err;
 }	t_tex_set;
 
-int	init_game(t_cub *game);
+int		init_game(t_cub *game);
 void	run_parse_checks(t_cub *cub, char *path);
 void	test_map_child(char *path);
 void	test_map(char *path);
@@ -140,7 +190,6 @@ void	parsing(t_cub *cub);
 void	check_textures(t_cub *cub);
 
 void	parse_map(t_cub *cub);
-//void	draw_map(t_game *game);
 void	map_error(t_cub *cub, char *message);
 void	strip_line_end(char *line);
 void	normalize_tabs(char *line);
@@ -159,12 +208,24 @@ int		parse_header_line(t_cub *cub, char *line);
 void	ff_free(t_ff *ff);
 void	parse_texture(t_cub *cub, char **dest, char *line, int i);
 void	parse_color(t_cub *cub, char **dest, char *line, int i);
-
+int		set_texture(t_tex_set *a);
 int		parse_texture_line(t_cub *cub, char *line, int i);
 int		parse_color_line(t_cub *cub, char *line, int i);
 int		parse_header_line(t_cub *cub, char *line);
 
-int		set_texture(t_tex_set *a);
-
-
+//void	draw_map(t_game *game);
+void			setup(t_cub *game);
+void			load_tex(t_cub *game);
+void			hook_key_press(mlx_key_data_t key_p, void *p);
+void    hook_close(void *p);
+bool			can_move_to(t_cub *game, float new_x, float new_y);
+int				get_signal(float v);
+t_vector		rotate_vector(t_vector v, float angle);
+t_vector		create_vector(double x, double y);
+t_vector		mult_vector(t_vector v, double s);
+t_vector		add_vector(t_vector v1, t_vector v2);
+mlx_texture_t	*init_tex(char *path);
+void			draw_wall(t_cub *game, t_dda *ray, int pix);
+void    draw_view(void *p);
+uint32_t		get_tex_color(mlx_texture_t *tex, int y, int x);
 #endif

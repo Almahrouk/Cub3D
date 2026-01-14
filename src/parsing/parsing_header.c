@@ -12,6 +12,29 @@
 
 #include "cub3D.h"
 
+static int	is_valid_rgb(int r, int g, int b)
+{
+	if (r >= 0 && r <= 255 && g >= 0  && g <= 255 && b >= 0 && b <= 255)
+		return (1);
+	return (0);
+}
+
+uint32_t	parse_rgb(t_cub *cub, char *str)
+{
+	char	**part;
+	int		r;
+	int		g;
+	int		b;
+
+	if (!str)
+		ft_exit(cub, "ERROR\nmissing color\n", INPUT_ERROR);
+	part = ft_split(str, ',');
+	if (!part || !part[0] || !part[1] || !part[2] || part[3])
+	{
+		ft_free_split();
+	}
+}
+
 void	parse_texture(t_cub *cub, char **dest, char *line, int i)
 {
 	int	start;

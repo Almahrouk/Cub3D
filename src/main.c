@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dal-mahr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abeer42 <abeer42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 13:50:16 by dal-mahr          #+#    #+#             */
-/*   Updated: 2025/01/01 13:50:24 by dal-mahr         ###   ########.fr       */
+/*   Updated: 2026/01/13 22:21:30 by abeer42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	init_game(t_cub *game)
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
 		return (EXIT_FAILURE);
 	load_tex(game);
-	setup(game->mlx);
+	setup(game);
 	mlx_key_hook(game->mlx, hook_key_press, game);
-	mlx_loop_hook(game->mlx, draw_playerview, game);
+	mlx_loop_hook(game->mlx, draw_view, game);
 	mlx_close_hook(game->mlx, hook_close, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);

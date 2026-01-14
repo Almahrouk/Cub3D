@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dal-mahr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abeer42 <abeer42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 13:50:16 by dal-mahr          #+#    #+#             */
-/*   Updated: 2025/01/01 13:50:24 by dal-mahr         ###   ########.fr       */
+/*   Updated: 2026/01/13 23:26:02 by abeer42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ int	parse_texture_line(t_cub *cub, char *line, int i)
 
 	if (ft_strncmp(&line[i], "NO", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->north_path, line, i, "Error\nduplicate NO\n"};
+		tex_set = (t_tex_set){cub, &cub->data->no, line, i, "Error\nduplicate NO\n"};
 		return (set_texture(&tex_set));
 	}
 	if (ft_strncmp(&line[i], "SO", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->south_path, line, i, "Error\nduplicate SO\n"};
+		tex_set = (t_tex_set){cub, &cub->data->so, line, i, "Error\nduplicate SO\n"};
 		return (set_texture(&tex_set));
 	}
 	if (ft_strncmp(&line[i], "WE", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->west_path, line, i, "Error\nduplicate WE\n"};
+		tex_set = (t_tex_set){cub, &cub->data->we, line, i, "Error\nduplicate WE\n"};
 		return (set_texture(&tex_set));
 	}
 	if (ft_strncmp(&line[i], "EA", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->east_path, line, i, "Error\nduplicate EA\n"};
+		tex_set = (t_tex_set){cub, &cub->data->ea, line, i, "Error\nduplicate EA\n"};
 		return (set_texture(&tex_set));
 	}
 	return (0);
@@ -43,21 +43,23 @@ int	parse_color_line(t_cub *cub, char *line, int i)
 {
 	if (line[i] == 'F')
 	{
-		if (cub->floor_color)
+		if (cub->data->floor_str)
 		{
 			cub->error_message = ft_strdup("Error\nduplicate F\n");
 			return (0);
 		}
-		parse_color(cub, &cub->floor_color, line, i);
+		parse_color(cub, &cub->data->floor, line, i);
+		cub->data->floor_str = 1;
 	}
 	else if (line[i] == 'C')
 	{
-		if (cub->ceiling_color)
+		if (cub->data->ceil_str)
 		{
 			cub->error_message = ft_strdup("Error\nduplicate C\n");
 			return (0);
 		}
-		parse_color(cub, &cub->ceiling_color, line, i);
+		parse_color(cub, &cub->data->ceil, line, i);
+		cub->data->ceil_str = 1;
 	}
 	else
 		return (0);
