@@ -1,0 +1,56 @@
+# Intel Mesa / OpenGL driver (iris)
+{
+   mesa_iris
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/*/dri/*_dri.so
+}
+
+# GLX
+{
+   glx
+   Memcheck:Leak
+   ...
+   obj:*/libGLX.so*
+}
+
+# X11
+{
+   x11
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so*
+}
+
+# GLFW (used internally by MLX on Linux)
+{
+   glfw
+   Memcheck:Leak
+   ...
+   obj:*/libglfw.so*
+}
+
+# LLVM (used by Mesa)
+{
+   llvm
+   Memcheck:Leak
+   ...
+   obj:*/libLLVM*
+}
+
+# Dynamic loader
+{
+   ld_linux
+   Memcheck:Leak
+   ...
+   fun:_dl_*
+}
+
+# glibc dynamic loader (dl-load.c false positives)
+{
+   glibc_dl_load
+   Memcheck:Addr8
+   fun:strncmp
+   fun:is_dst
+   fun:_dl_*
+}

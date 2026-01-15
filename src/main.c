@@ -12,20 +12,12 @@
 
 #include "cub3D.h"
 
-void	run_parse_checks(t_cub *cub, char *path)
+void	run_parse_checks(t_cub *cub)
 {
 	check_file(cub);
-	if (cub->error_message)
-		print_bad(path, cub->error_message);
 	parsing(cub);
-	if (cub->error_message)
-		print_bad(path, cub->error_message);
 	parse_map(cub);
-	if (cub->error_message)
-		print_bad(path, cub->error_message);
 	check_textures(cub);
-	if (cub->error_message)
-		print_bad(path, cub->error_message);
 }
 
 void	test_map_child(char *path)
@@ -35,7 +27,7 @@ void	test_map_child(char *path)
 	init(&cub);
 	cub.test_mode = 1;
 	cub.file_name = ft_strdup(path);
-	run_parse_checks(&cub, path);
+	run_parse_checks(&cub);
 	printf("GOOD %s\n", path);
 	exit(0);
 }
@@ -53,16 +45,16 @@ void	test_map(char *path)
 		printf("BAD %s: Segmentation fault\n", path);
 }
 
-int	init_game(t_cub *game)
+void	init_game(t_cub *game)
 {
 	game->mlx = mlx_init(WIN_W, WIN_H, "cub3D", true);
 	if (!game->mlx)
-		return (EXIT_FAILURE);
+		ft_exit_game(game, "Error\nmlx_init failer\n", INIT_GAME);
 	game->img = mlx_new_image(game->mlx, WIN_W, WIN_H);
 	if (!game->img)
-		return (EXIT_FAILURE);
+		ft_exit_game(game, "Error\nmlx_new_image failer\n", INIT_GAME);
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
-		return (EXIT_FAILURE);
+		ft_exit_game(game, "Error\nmlx_image_to_window failer\n", INIT_GAME);
 	load_tex(game);
 	setup(game);
 	mlx_key_hook(game->mlx, hook_key_press, game);
@@ -70,7 +62,6 @@ int	init_game(t_cub *game)
 	mlx_close_hook(game->mlx, hook_close, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
-	return (EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
@@ -79,7 +70,6 @@ int	main(int ac, char **av)
 
 	init_cub(ac, av, &cub);
 	parsing(&cub);
-	// parse_map(&cub);
 	check_textures(&cub);
 	printf("hello8");
 	init_game(&cub);

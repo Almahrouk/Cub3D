@@ -5,3 +5,5 @@ in check_textures_paths
 	//⚠️ Risky if path == NULL
 	//⚠️ Risky if path shorter than 4 chars
 }
+
+valgrind --leak-check=full --leak-check=full --show-leak-kinds=all ./cub3D ./map/bad/textures_duplicates.cub

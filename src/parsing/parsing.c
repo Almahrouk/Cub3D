@@ -19,10 +19,7 @@ static char	*next_non_empty_line(t_cub *cub, char *line)
 		if (!line)
 			line = get_next_line(cub->fd);
 		if (!line)
-        {
-            printf("Reached end of file while looking for non-empty line.\n"); // Debug line
 			map_error(cub, "Error\nmissing map\n");
-        }
 		strip_line_end(line);
 		normalize_tabs(line);
 		if (!is_line_empty(line))
@@ -44,7 +41,6 @@ static void	parse_headers(t_cub *cub)
 		if (is_map_line(line))
 		{
 			cub->line = line;
-            // printf("FOUND MAP LINE: '%s'\n", line); // Debug line
 			return ;
 		}
 		if (!parse_header_line(cub, line))

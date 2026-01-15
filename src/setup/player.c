@@ -14,7 +14,6 @@
 
 static void	define_initial_plane(t_cub *game)
 {
-	/**/
 	if (game->data->pov == 'N')
 	{
 		game->dir = create_vector(0, -1);
@@ -28,7 +27,7 @@ static void	define_initial_plane(t_cub *game)
 	else if (game->data->pov == 'W')
 	{
 		game->dir = create_vector(-1, 0);
-		game-> camera_plane = create_vector(0, -0.66);
+		game->camera_plane = create_vector(0, -0.66);
 	}
 	else if (game->data->pov == 'E')
 	{
@@ -39,8 +38,8 @@ static void	define_initial_plane(t_cub *game)
 
 void	setup(t_cub *game)
 {
-	if (game->data->player_x < 0 || game->data->player_x >= game->map_w ||
-   	 	game->data->player_y < 0 || game->data->player_y >= game->map_h)
+	if (game->data->player_x < 0 || game->data->player_x >= game->map_w
+		|| game->data->player_y < 0 || game->data->player_y >= game->map_h)
 	{
 		ft_exit(game, "Error: Player coordinates out of map bounds!", FAILD);
 	}

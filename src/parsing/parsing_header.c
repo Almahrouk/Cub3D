@@ -14,7 +14,7 @@
 
 static int	is_valid_rgb(int r, int g, int b)
 {
-	if (r >= 0 && r <= 255 && g >= 0  && g <= 255 && b >= 0 && b <= 255)
+	if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255)
 		return (1);
 	return (0);
 }
@@ -32,7 +32,7 @@ uint32_t	parse_rgb(t_cub *cub, char *str)
 	if (!part || !part[0] || !part[1] || !part[2] || part[3])
 	{
 		if (part)
-			ft_free_split_recursive(part,0);
+			ft_free_split_recursive(part, 0);
 		ft_exit(cub, "Error\ninvalid color format\n", INPUT_ERROR);
 	}
 	r = ft_atoi(part[0]);

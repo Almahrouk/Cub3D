@@ -52,10 +52,7 @@ void	check_map_content(t_cub *cub)
 		y++;
 	}
 	if (player_count != 1)
-    {
-        printf("Player count: %d\n", player_count); // Debug line
 		map_error(cub, "Error\ninvalid player count\n");
-    }
 }
 
 void	validate_map(t_cub *cub)

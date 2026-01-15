@@ -38,6 +38,7 @@ typedef enum e_error
 {
 	SUCCESS,
 	FAILD,
+	INIT_GAME,
 	INPUT_ERROR,
 	OPEN_FILE_ERROR,
 	EMPTY_FILE_ERROR,
@@ -45,7 +46,8 @@ typedef enum e_error
 	MISSING_TEXTURE_ERROR,
 	TEXTURE_PATH_ERROR,
 	TEXTURE_OPEN_ERROR,
-	MAP_ERROR
+	MAP_ERROR,
+	LOAD_TEX
 }	t_error;
 
 typedef struct s_vector
@@ -171,20 +173,20 @@ typedef struct s_tex_set
 	char	*dup_err;
 }	t_tex_set;
 
-int				init_game(t_cub *game);
-void			run_parse_checks(t_cub *cub, char *path);
+void			init_game(t_cub *game);
+void			run_parse_checks(t_cub *cub);
 void			test_map_child(char *path);
 void			test_map(char *path);
 
 void			init(t_cub *cub);
 void			init_cub(int ac, char **av, t_cub *cub);
-void			print_bad(char *path, char *msg);
+void			ft_free_split_recursive(char **split, size_t index);
 
 void			check_file(t_cub *cub);
 void			check_input(int ac, char **av, t_cub *map);
 
 void			ft_exit(t_cub *cub, char *message, int errno);
-void			ft_exit_input(char *message, int errno);
+void			ft_exit_game(t_cub *cub, char *message, int errno);
 
 void			parsing(t_cub *cub);
 void			check_textures(t_cub *cub);
@@ -235,5 +237,7 @@ int				set_dir(float dir);
 void			calculate_delta_dist(t_dda *ray);
 void			calculate_dist_2side(t_cub *game, t_dda *ray);
 void			dda_algo(t_cub *game, t_dda *ray);
+void			destroy_textures(t_cub *game);
+
 
 #endif

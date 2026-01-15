@@ -14,12 +14,8 @@
 
 void	check_textures_paths(t_cub *cub, char *path, char *message)
 {
-	//⚠️ Risky if path == NULL
-	//⚠️ Risky if path shorter than 4 chars
-	/*
 	if (!path || ft_strlen(path) < 4)
 		ft_exit(cub, message, TEXTURE_PATH_ERROR);
-	*/
 	if (ft_strncmp(path + ft_strlen(path) - 4, ".png", 4) != 0
 		&& ft_strncmp(path + ft_strlen(path) - 4, ".xpm", 4) != 0)
 		ft_exit(cub, message, TEXTURE_PATH_ERROR);
@@ -46,9 +42,25 @@ void	check_duplicates(t_cub *cub)
 		ft_exit(cub, "Error\nduplicate texture paths\n", TEXTURE_PATH_ERROR);
 }
 
+void	validate_textures(t_cub *cub)
+{
+	if (!cub->test_mode)
+	{
+		check_textures_open(cub, cub->data->no,
+			"Error\nopening north texture\n");
+		check_textures_open(cub, cub->data->so,
+			"Error\nopening south texture\n");
+		check_textures_open(cub, cub->data->we,
+			"Error\nopening west texture\n");
+		check_textures_open(cub, cub->data->ea,
+			"Error\nopening east texture\n");
+		printf("All textures are valid and accessible.\n");
+	}
+}
+
 static void	check_texture_files(t_cub *cub)
 {
-	check_textures_paths(cub, cub->data->no ,
+	check_textures_paths(cub, cub->data->no,
 		"Error\nnorth texture must be .png or .xpm\n");
 	check_textures_paths(cub, cub->data->so,
 		"Error\nsouth texture must be .png or .xpm\n");
@@ -57,14 +69,7 @@ static void	check_texture_files(t_cub *cub)
 	check_textures_paths(cub, cub->data->ea,
 		"Error\neast texture must be .png or .xpm\n");
 	check_duplicates(cub);
-	if (!cub->test_mode)
-	{
-		check_textures_open(cub, cub->data->no, "Error\nopening north texture\n");
-		check_textures_open(cub, cub->data->so, "Error\nopening south texture\n");
-		check_textures_open(cub, cub->data->we, "Error\nopening west texture\n");
-		check_textures_open(cub, cub->data->ea, "Error\nopening east texture\n");
-		printf("All textures are valid and accessible.\n");
-	}
+	validate_textures(cub);
 }
 
 void	check_textures(t_cub *cub)
