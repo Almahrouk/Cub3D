@@ -35,9 +35,11 @@ void	hook_close(void *p)
 {
 	t_cub	*game;
 
+	if (!p)
+		exit(0);
 	game = (t_cub *) p;
-	free_memory(game);
-	mlx_close_window(game->mlx);
+	if (game->mlx)
+		mlx_close_window(game->mlx);
 }
 
 static void	pressed(mlx_key_data_t key_p, t_cub *game)

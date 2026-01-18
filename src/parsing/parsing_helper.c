@@ -18,22 +18,26 @@ int	parse_texture_line(t_cub *cub, char *line, int i)
 
 	if (ft_strncmp(&line[i], "NO", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->data->no, line, i, "Error\nduplicate NO\n"};
+		tex_set = (t_tex_set){cub, &cub->data->no, line, i,
+			"Error\nduplicate NO\n"};
 		return (set_texture(&tex_set));
 	}
 	if (ft_strncmp(&line[i], "SO", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->data->so, line, i, "Error\nduplicate SO\n"};
+		tex_set = (t_tex_set){cub, &cub->data->so, line, i,
+			"Error\nduplicate SO\n"};
 		return (set_texture(&tex_set));
 	}
 	if (ft_strncmp(&line[i], "WE", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->data->we, line, i, "Error\nduplicate WE\n"};
+		tex_set = (t_tex_set){cub, &cub->data->we, line, i,
+			"Error\nduplicate WE\n"};
 		return (set_texture(&tex_set));
 	}
 	if (ft_strncmp(&line[i], "EA", 2) == 0)
 	{
-		tex_set = (t_tex_set){cub, &cub->data->ea, line, i, "Error\nduplicate EA\n"};
+		tex_set = (t_tex_set){cub, &cub->data->ea, line, i,
+			"Error\nduplicate EA\n"};
 		return (set_texture(&tex_set));
 	}
 	return (0);
@@ -45,6 +49,8 @@ int	parse_color_line(t_cub *cub, char *line, int i)
 	{
 		if (cub->data->floor_str)
 		{
+			if (cub->error_message)
+				free(cub->error_message);
 			cub->error_message = ft_strdup("Error\nduplicate F\n");
 			return (0);
 		}
@@ -73,7 +79,8 @@ int	parse_header_line(t_cub *cub, char *line)
 		i++;
 	if (line[i] == '\0')
 		return (1);
-	if (ft_strncmp(&line[i], "NO", 2) == 0 || ft_strncmp(&line[i], "SO", 2) == 0
+	if (ft_strncmp(&line[i], "NO", 2) == 0
+		|| ft_strncmp(&line[i], "SO", 2) == 0
 		|| ft_strncmp(&line[i], "WE", 2) == 0
 		|| ft_strncmp(&line[i], "EA", 2) == 0)
 		return (parse_texture_line(cub, line, i));

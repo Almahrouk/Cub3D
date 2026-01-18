@@ -6,7 +6,7 @@
 /*   By: abeer42 <abeer42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by almah             #+#    #+#             */
-/*   Updated: 2026/01/13 23:23:10 by abeer42          ###   ########.fr       */
+/*   Updated: 2026/01/16 17:38:03 by abeer42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef enum e_error
 {
 	SUCCESS,
 	FAILD,
-	INIT_GAME,
 	INPUT_ERROR,
 	OPEN_FILE_ERROR,
 	EMPTY_FILE_ERROR,
@@ -46,8 +45,7 @@ typedef enum e_error
 	MISSING_TEXTURE_ERROR,
 	TEXTURE_PATH_ERROR,
 	TEXTURE_OPEN_ERROR,
-	MAP_ERROR,
-	LOAD_TEX
+	MAP_ERROR
 }	t_error;
 
 typedef struct s_vector
@@ -119,35 +117,29 @@ typedef struct s_wall
 typedef struct s_cub
 {
 	int				fd;
-	char			*line;
-	char			*file_name;
-	//char			*north_path;//
-	//char			*south_path;//
-	//char			*west_path;//
-	//char			*east_path;//
-	char			**map;
 	int				map_w;
 	int				map_h;
-	//int				player_x;
-	//int				player_y;
-	char			player_dir;
 	int				hit_side;
+	int				test_mode;
+	int				error_code;
+	char			player_dir;
+	char			*line;
+	char			*file_name;
+	char			**map;
+	char			*error_message;
+	float			frame;
 	mlx_t			*mlx;
+	t_key			keys;
+	t_data			*data;
+	t_vector		pos;
+	t_vector		dir;
+	t_vector		camera_plane;
 	mlx_image_t		*img;
 	mlx_texture_t	*texture;
 	mlx_texture_t	*north_t;
 	mlx_texture_t	*south_t;
 	mlx_texture_t	*west_t;
 	mlx_texture_t	*east_t;
-	t_vector		pos;
-	t_vector		dir;
-	t_vector		camera_plane;
-	float			frame;
-	t_data			*data;
-	t_key			keys;
-	int				test_mode;
-	int				error_code;
-	char			*error_message;
 }	t_cub;
 
 typedef struct s_ff
@@ -173,20 +165,20 @@ typedef struct s_tex_set
 	char	*dup_err;
 }	t_tex_set;
 
-void			init_game(t_cub *game);
-void			run_parse_checks(t_cub *cub);
+int				init_game(t_cub *game);
+void			run_parse_checks(t_cub *cub, char *path);
 void			test_map_child(char *path);
 void			test_map(char *path);
 
 void			init(t_cub *cub);
 void			init_cub(int ac, char **av, t_cub *cub);
-void			ft_free_split_recursive(char **split, size_t index);
+void			print_bad(char *path, char *msg);
 
 void			check_file(t_cub *cub);
 void			check_input(int ac, char **av, t_cub *map);
 
 void			ft_exit(t_cub *cub, char *message, int errno);
-void			ft_exit_game(t_cub *cub, char *message, int errno);
+void			ft_exit_input(char *message, int errno);
 
 void			parsing(t_cub *cub);
 void			check_textures(t_cub *cub);
@@ -215,8 +207,6 @@ int				set_texture(t_tex_set *a);
 int				parse_texture_line(t_cub *cub, char *line, int i);
 int				parse_color_line(t_cub *cub, char *line, int i);
 int				parse_header_line(t_cub *cub, char *line);
-
-//void			draw_map(t_cub *game);
 void			setup(t_cub *game);
 void			load_tex(t_cub *game);
 void			hook_key_press(mlx_key_data_t key_p, void *p);
@@ -237,7 +227,6 @@ int				set_dir(float dir);
 void			calculate_delta_dist(t_dda *ray);
 void			calculate_dist_2side(t_cub *game, t_dda *ray);
 void			dda_algo(t_cub *game, t_dda *ray);
-void			destroy_textures(t_cub *game);
-
+void    try_move(t_cub *game, float new_x, float new_y);
 
 #endif

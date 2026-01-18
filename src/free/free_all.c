@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dal-mahr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aal-joul <aal-joul@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 13:50:16 by dal-mahr          #+#    #+#             */
-/*   Updated: 2025/01/01 13:50:24 by dal-mahr         ###   ########.fr       */
+/*   Created: 2026-01-18 11:02:54 by aal-joul          #+#    #+#             */
+/*   Updated: 2026-01-18 11:02:54 by aal-joul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static void	free_map(t_cub *cub)
 		return ;
 	i = 0;
 	while (i < cub->map_h)
-		free(cub->map[i++]);
+	{
+		free(cub->map[i]);
+		i++;
+	}
 	free(cub->map);
 	cub->map = NULL;
 }
@@ -77,4 +80,5 @@ void	free_memory(t_cub *cub)
 	free_data(cub);
 	free_textures(cub);
 	free_mlx(cub);
+	free(cub);
 }

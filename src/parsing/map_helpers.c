@@ -16,5 +16,3 @@ void	map_error(t_cub *cub, char *message)
 {
 	ft_exit(cub, message, MAP_ERROR);
 }
-
-/* end */

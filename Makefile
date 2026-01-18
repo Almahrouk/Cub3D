@@ -36,7 +36,6 @@ SRC = \
 	$(SRC_DIR)/graphic_draw/rays.c \
 	$(SRC_DIR)/graphic_draw/victore.c \
 	$(SRC_DIR)/graphic_draw/walls.c
-# 	$(SRC_DIR)/setup/draw.c \
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   darw_view.c                                        :+:      :+:    :+:   */
+/*   draw_view.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dal-mahr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aal-joul <aal-joul@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 13:50:16 by dal-mahr          #+#    #+#             */
-/*   Updated: 2025/01/01 13:50:24 by dal-mahr         ###   ########.fr       */
+/*   Created: 2026-01-18 10:34:49 by aal-joul          #+#    #+#             */
+/*   Updated: 2026-01-18 10:34:49 by aal-joul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	process_result(t_cub *game)
 	float	new_y;
 
 	calculate_new_pos(game, &new_x, &new_y);
-	if (can_move(game, new_x, new_y))
+	try_move(game, new_x, new_y);
+	if (can_move_to(game, new_x, new_y))
 	{
 		game->pos.x = new_x;
 		game->pos.y = new_y;
@@ -70,6 +71,7 @@ void	update_fps(t_cub *game)
 	static int			fps_len;
 	static mlx_image_t	*fps_img;
 
+	fps_len++;
 	if (fps_len % 15 == 0)
 	{
 		game->frame = game->mlx->delta_time;
@@ -78,8 +80,6 @@ void	update_fps(t_cub *game)
 		fps_n = ft_itoa(1 / game->mlx->delta_time);
 		fps_txt = ft_strjoin("FPS: ", fps_n);
 		free(fps_n);
-		fps_img = mlx_put_string(game->mlx, fps_txt,
-				WIN_W - 80, WIN_H - 590);
 		free(fps_txt);
 	}
 }

@@ -49,7 +49,8 @@ uint32_t	parse_rgb(t_cub *cub, char *str)
 
 void	parse_texture(t_cub *cub, char **dest, char *line, int i)
 {
-	int	start;
+	int		start;
+	char	*tmp;
 
 	if (line[i + 2] != ' ' && line[i + 2] != '\t')
 		ft_exit(cub, "Error\ninvalid texture path\n", PARSEING_TEXTURE_ERROR);
@@ -61,7 +62,12 @@ void	parse_texture(t_cub *cub, char **dest, char *line, int i)
 	start = i;
 	while (line[i] && line[i] != ' ' && line[i] != '\t')
 		i++;
-	*dest = ft_substr(line, start, i - start);
+	tmp = ft_substr(line, start, i - start);
+	if (!tmp)
+		ft_exit(cub, "Error\nmalloc failed\n", FAILD);
+	if (*dest)
+		free(*dest);
+	*dest = tmp;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '\0')

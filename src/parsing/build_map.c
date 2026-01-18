@@ -33,7 +33,9 @@ static int	get_max_width(t_list *lines)
 static void	alloc_map_array(t_cub *cub, t_list *lines)
 {
 	if (!lines)
+	{
 		map_error(cub, "Error\nmissing map\n");
+	}
 	cub->map_h = ft_lstsize(lines);
 	cub->map_w = get_max_width(lines);
 	cub->map = malloc(sizeof(char *) * (cub->map_h + 1));

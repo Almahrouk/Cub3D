@@ -24,9 +24,14 @@ static void	intersection_point(t_cub *game, t_dda *ray, t_wall *wall)
 static void	find_tex_position_x(t_cub *game, t_dda *ray, t_wall *wall)
 {
 	wall->tex_x = (int)(wall->point_x * game->texture->width);
+	if (wall->tex_x < 0)
+		wall->tex_x = 0;
+	if (wall->tex_x >= (int)game->texture->width)
+		wall->tex_x = game->texture->width - 1;
+	wall->tex_step = 1.0 * game->texture->height / wall->h;
 	if ((ray->hit_side == 0 && ray->dir.x < 0)
 		|| (ray->hit_side == 1 && ray->dir.y > 0))
-		wall->tex_step = 1.0 * game->texture->height / wall->h;
+		wall->tex_x = game->texture->width - wall->tex_x - 1;
 }
 
 static void	render_wall(t_cub *game, t_wall *wall, int pix)
@@ -73,6 +78,7 @@ void	draw_wall(t_cub *game, t_dda *ray, int pix)
 {
 	t_wall	wall;
 
+	ft_bzero(&wall, sizeof(t_wall));
 	game->texture = set_wall(game, ray);
 	wall.h = (WIN_H / ray->perp_dist);
 	wall.start_y = (WIN_H / 2 - wall.h / 2);
@@ -80,10 +86,10 @@ void	draw_wall(t_cub *game, t_dda *ray, int pix)
 	if (wall.start_y < 0)
 		wall.start_y = 0;
 	if (wall.end_y >= WIN_H)
-		wall.end_y >= WIN_H - 1;
+		wall.end_y = WIN_H - 1;
 	intersection_point(game, ray, &wall);
 	find_tex_position_x(game, ray, &wall);
 	wall.tex_pos = (wall.start_y - WIN_H / 2 + wall.h / 2)
-		*wall.tex_step;
+		* wall.tex_step;
 	render_wall(game, &wall, pix);
 }

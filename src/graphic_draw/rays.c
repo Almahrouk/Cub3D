@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dal-mahr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aal-joul <aal-joul@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 13:50:16 by dal-mahr          #+#    #+#             */
-/*   Updated: 2025/01/01 13:50:24 by dal-mahr         ###   ########.fr       */
+/*   Created: 2026-01-18 10:43:49 by aal-joul          #+#    #+#             */
+/*   Updated: 2026-01-18 10:43:49 by aal-joul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	calculate_delta_dist(t_dda *ray)
 	if (ray->dir.x == 0)
 		ray->delta_dist.x = HUGE_VALF;
 	else
-		ray->delta_dist.x = fabsf(1 / ray->dir.x);
+		ray->delta_dist.x = fabs(1 / ray->dir.x);
 	if (ray->dir.y == 0)
 		ray->delta_dist.y = HUGE_VALF;
 	else
-		ray->delta_dist.y = fabsf(1 / ray->dir.y);
+		ray->delta_dist.y = fabs(1 / ray->dir.y);
 }
 
 void	calculate_dist_2side(t_cub *game, t_dda *ray)
@@ -53,7 +53,7 @@ void	calculate_dist_2side(t_cub *game, t_dda *ray)
 
 void	dda_algo(t_cub *game, t_dda *ray)
 {
-	while (game->data->map[ray->map.y][ray->map.x] != '1')
+	while (game->map[ray->map.y][ray->map.x] != '1')
 	{
 		if (ray->dist_side.x < ray->dist_side.y)
 		{

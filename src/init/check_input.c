@@ -25,8 +25,8 @@ void	check_file(t_cub *cub)
 void	check_input(int ac, char **av, t_cub *cub)
 {
 	if (ac != 2)
-		ft_exit(cub, "Error\nwrong number of arguments\n", INPUT_ERROR);
+		ft_exit_input("Error\nwrong number of arguments\n", INPUT_ERROR);
 	else if (ft_strncmp(&av[1][ft_strlen(av[1]) - 4], ".cub", 5) != 0)
-		ft_exit(cub, "Error\nfile must be .cub\n", INPUT_ERROR);
+		ft_exit_input("Error\nfile must be .cub\n", INPUT_ERROR);
 	cub->file_name = av[1];
 }
