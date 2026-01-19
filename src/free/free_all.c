@@ -65,10 +65,16 @@ void	free_mlx(t_cub *cub)
 	if (!cub)
 		return ;
 	if (cub->img)
+	{
 		mlx_delete_image(cub->mlx, cub->img);
+		cub->img = NULL;
+	}
 	cub->img = NULL;
 	if (cub->mlx)
+	{
 		mlx_terminate(cub->mlx);
+		cub->mlx = NULL;
+	}
 	cub->mlx = NULL;
 }
 

@@ -39,9 +39,11 @@ typedef enum e_error
 	SUCCESS,
 	FAILD,
 	MALLOC_FAILED,
+	INIT_GAME,
 	INPUT_ERROR,
 	OPEN_FILE_ERROR,
 	EMPTY_FILE_ERROR,
+	FAILD_LOAD_TEXTURES,
 	PARSEING_TEXTURE_ERROR,
 	MISSING_TEXTURE_ERROR,
 	TEXTURE_PATH_ERROR,
@@ -167,9 +169,6 @@ typedef struct s_tex_set
 }	t_tex_set;
 
 int				init_game(t_cub *game);
-void			run_parse_checks(t_cub *cub, char *path);
-void			test_map_child(char *path);
-void			test_map(char *path);
 
 void			init(t_cub *cub);
 void			init_cub(int ac, char **av, t_cub *cub);
@@ -233,6 +232,7 @@ void	free_data(t_cub *cub);
 void	free_textures(t_cub *cub);
 void	free_mlx(t_cub *cub);
 void	ft_exit_input(t_cub *cub, char *message, int err_no);
+void	ft_exit_game(t_cub *cub, char *message, int err_no);
 
 
 #endif

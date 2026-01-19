@@ -29,7 +29,7 @@ void	load_tex(t_cub *game)
 	game->west_t = init_tex(game->data->we);
 	game->east_t = init_tex(game->data->ea);
 	if (!game->north_t || !game->south_t || !game->west_t || !game->east_t)
-		ft_exit(game, "Error\nfailed to load textures\n", FAILD);
+		ft_exit(game, "Error\nfailed to load textures\n", FAILD_LOAD_TEXTURES);
 }
 
 uint32_t	get_tex_color(mlx_texture_t *tex, int y, int x)

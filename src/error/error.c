@@ -27,17 +27,3 @@ void	ft_exit(t_cub *cub, char *message, int err_no)
 	free_memory(cub);
 	exit(err_no);
 }
-
-void	ft_exit_input(t_cub *cub, char *message, int err_no)
-{
-	write(2, message, ft_strlen(message));
-	free_data(cub);
-	exit(err_no);
-}
-
-void	print_bad(char *path, char *msg)
-{
-	//is it nedeed??
-	printf("BAD %s: %s", path, msg);
-	exit(1);
-}
