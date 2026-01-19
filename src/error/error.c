@@ -24,6 +24,11 @@ void	ft_exit(t_cub *cub, char *message, int err_no)
 	}
 	if (message)
 		write(2, message, ft_strlen(message));
+	if (cub && cub->error_message)
+	{
+		free(cub->error_message);
+		cub->error_message = NULL;
+	}
 	free_memory(cub);
 	exit(err_no);
 }

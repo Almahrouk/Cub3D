@@ -101,7 +101,7 @@ void	validate_map(t_cub *cub)
 // 			if (map_started)
 // 			{
 // 				free(line);
-// 				ft_exit(cub, "Error\nmap duplicate\n", MAP_ERROR);
+// 				ft_exit(cub, "Error\nmap invalid\n", MAP_ERROR);
 // 			}
 // 			free(line);
 // 			line = get_next_line(cub->fd);
@@ -117,57 +117,49 @@ void	validate_map(t_cub *cub)
 // 	validate_map(cub);
 // }
 
-
-t_list	*list_from_split(char **lines)
-{
-	t_list	*lst;
-	int		i;
-
-	lst = NULL;
-	i = 0;
-	while (lines[i])
-	{
-		if (!is_line_empty(lines[i]))
-		{
-			ft_lstadd_back(&lst,
-				ft_lstnew(ft_strdup(lines[i])));
-		}
-		i++;
-	}
-	return (lst);
-}
-
-
 void	parse_map(t_cub *cub)
 {
-	char	**lines;
-	int		i;
-	int		map_started;
+	char	*line;
+	t_list	*lines;
+	bool	map_started;
+	bool	map_ended;
 
-	lines = ft_split(cub->line, '\n');
-	if (!lines)
-		map_error(cub, "Error\nmalloc failed\n");
-	map_started = 0;
-	i = 0;
-	while (lines[i])
+	lines = NULL;
+	line = cub->line;
+	cub->line = NULL;
+	map_started = false;
+	map_ended = false;
+	while (line || (line = get_next_line(cub->fd)))
 	{
-		strip_line_end(lines[i]);
-		normalize_tabs(lines[i]);
-		if (is_line_empty(lines[i]))
+		strip_line_end(line);
+		normalize_tabs(line);
+
+		if (is_line_empty(line))
 		{
 			if (map_started)
-			{
-				ft_free(lines);
-				map_error(cub, "Error\nmap duplicate\n");
-			}
-			i++;
-			continue ;
+				map_ended = true; // reached end of map
+			free(line);
+			line = NULL;
+			continue;
 		}
-		map_started = 1;
-		i++;
+
+		if (map_ended)
+		{
+			// any non-empty line after the map ends is invalid
+			free(line);
+			ft_lstclear(&lines, free);
+			ft_exit(cub, "Error\nmap invalid\n", MAP_ERROR);
+		}
+
+		map_started = true;
+		ft_lstadd_back(&lines, ft_lstnew(line));
+		line = NULL;
 	}
-	build_map(cub, list_from_split(lines));
-	ft_free(lines);
+
+	if (!lines)
+		map_error(cub, "Error\nmissing map\n");
+
+	build_map(cub, lines);
+	ft_lstclear(&lines, free);
 	validate_map(cub);
 }
-

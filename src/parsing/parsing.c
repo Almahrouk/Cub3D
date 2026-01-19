@@ -55,7 +55,11 @@ static void	parse_headers(t_cub *cub)
 			}
 		}
 		if (cub->error_message)
+		{
+			free(line);
+			line = NULL;
 			ft_exit(cub, cub->error_message, MAP_ERROR);
+		}
 		free(line);
 		line = NULL;
 	}

@@ -77,5 +77,4 @@ void	build_map(t_cub *cub, t_list *lines)
 {
 	alloc_map_array(cub, lines);
 	fill_map_rows(cub, lines);
-	ft_lstclear(&lines, free);
 }

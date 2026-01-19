@@ -91,5 +91,6 @@ void	free_memory(t_cub *cub)
 	cub->line = NULL;
 	if (cub->fd >= 0)
     	close(cub->fd);
+	gnl_cleanup();
 	free(cub);
 }

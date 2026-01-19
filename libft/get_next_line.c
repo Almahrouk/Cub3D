@@ -12,6 +12,8 @@
 
 #include "libft.h"
 
+static char *temp = NULL;
+
 static char	*keep_rest(char *temp, int start)
 {
 	char	*rest;
@@ -68,7 +70,6 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	char		*line;
-	static char	*temp = NULL;
 	int			start_next;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -81,10 +82,23 @@ char	*get_next_line(int fd)
 	temp = new_line(fd, buffer, temp);
 	free(buffer);
 	if (!temp)
-		return (free(temp), (NULL));
+		return (NULL);
 	line = extract_line(temp, &start_next);
-	if (!line && !temp)
-		return (free(temp), (NULL));
+	if (!line)
+	{
+		free(temp);
+		temp = NULL;
+		return (NULL);
+	}
 	temp = keep_rest(temp, start_next);
 	return (line);
+}
+
+void	gnl_cleanup(void)
+{
+	if (temp)
+	{
+		free(temp);
+		temp = NULL;
+	}
 }
