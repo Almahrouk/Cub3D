@@ -225,12 +225,15 @@ int				set_dir(float dir);
 void			calculate_delta_dist(t_dda *ray);
 void			calculate_dist_2side(t_cub *game, t_dda *ray);
 void			dda_algo(t_cub *game, t_dda *ray);
-void    try_move(t_cub *game, float new_x, float new_y);
-void	free_map(t_cub *cub);
-void	free_data(t_cub *cub);
-void	free_textures(t_cub *cub);
-void	free_mlx(t_cub *cub);
-void	ft_free(char **s);
+void    		try_move(t_cub *game, float new_x, float new_y);
+void			free_map(t_cub *cub);
+void			free_data(t_cub *cub);
+void			free_textures(t_cub *cub);
+void			free_mlx(t_cub *cub);
+void			ft_free(char **s);
+int				is_invalid_neighbor(t_cub *cub, int x, int y);
+
+
 
 
 #endif

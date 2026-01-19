@@ -12,34 +12,39 @@
 
 #include "cub3D.h"
 
+static void	init_tex_set(t_tex_set *set,
+	t_cub *cub, char **dst, char *err)
+{
+	set->cub = cub;
+	set->dst = dst;
+	set->dup_err = err;
+}
+
+static int	try_set_texture(t_tex_set *set, char *line, int i, char *id)
+{
+	if (ft_strncmp(&line[i], id, 2) != 0)
+		return (0);
+	set->line = line;
+	set->i = i;
+	return (set_texture(set));
+}
+
 int	parse_texture_line(t_cub *cub, char *line, int i)
 {
-	t_tex_set	tex_set;
+	t_tex_set	set;
 
-	if (ft_strncmp(&line[i], "NO", 2) == 0)
-	{
-		tex_set = (t_tex_set){cub, &cub->data->no, line, i,
-			"Error\nduplicate NO\n"};
-		return (set_texture(&tex_set));
-	}
-	if (ft_strncmp(&line[i], "SO", 2) == 0)
-	{
-		tex_set = (t_tex_set){cub, &cub->data->so, line, i,
-			"Error\nduplicate SO\n"};
-		return (set_texture(&tex_set));
-	}
-	if (ft_strncmp(&line[i], "WE", 2) == 0)
-	{
-		tex_set = (t_tex_set){cub, &cub->data->we, line, i,
-			"Error\nduplicate WE\n"};
-		return (set_texture(&tex_set));
-	}
-	if (ft_strncmp(&line[i], "EA", 2) == 0)
-	{
-		tex_set = (t_tex_set){cub, &cub->data->ea, line, i,
-			"Error\nduplicate EA\n"};
-		return (set_texture(&tex_set));
-	}
+	init_tex_set(&set, cub, &cub->data->no, "Error\nduplicate NO\n");
+	if (try_set_texture(&set, line, i, "NO"))
+		return (1);
+	init_tex_set(&set, cub, &cub->data->so, "Error\nduplicate SO\n");
+	if (try_set_texture(&set, line, i, "SO"))
+		return (1);
+	init_tex_set(&set, cub, &cub->data->we, "Error\nduplicate WE\n");
+	if (try_set_texture(&set, line, i, "WE"))
+		return (1);
+	init_tex_set(&set, cub, &cub->data->ea, "Error\nduplicate EA\n");
+	if (try_set_texture(&set, line, i, "EA"))
+		return (1);
 	return (0);
 }
 
@@ -89,3 +94,34 @@ int	parse_header_line(t_cub *cub, char *line)
 	else
 		return (0);
 }
+
+// int	parse_texture_line(t_cub *cub, char *line, int i)
+// {
+// 	t_tex_set	tex_set;
+
+// 	if (ft_strncmp(&line[i], "NO", 2) == 0)
+// 	{
+// 		tex_set = (t_tex_set){cub, &cub->data->no, line, i,
+// 			"Error\nduplicate NO\n"};
+// 		return (set_texture(&tex_set));
+// 	}
+// 	if (ft_strncmp(&line[i], "SO", 2) == 0)
+// 	{
+// 		tex_set = (t_tex_set){cub, &cub->data->so, line, i,
+// 			"Error\nduplicate SO\n"};
+// 		return (set_texture(&tex_set));
+// 	}
+// 	if (ft_strncmp(&line[i], "WE", 2) == 0)
+// 	{
+// 		tex_set = (t_tex_set){cub, &cub->data->we, line, i,
+// 			"Error\nduplicate WE\n"};
+// 		return (set_texture(&tex_set));
+// 	}
+// 	if (ft_strncmp(&line[i], "EA", 2) == 0)
+// 	{
+// 		tex_set = (t_tex_set){cub, &cub->data->ea, line, i,
+// 			"Error\nduplicate EA\n"};
+// 		return (set_texture(&tex_set));
+// 	}
+// 	return (0);
+// }

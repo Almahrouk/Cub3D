@@ -31,6 +31,33 @@ static char	*next_non_empty_line(t_cub *cub, char *line)
 	}
 }
 
+static void	handle_header_line(t_cub *cub, char *line)
+{
+	if (!parse_header_line(cub, line))
+	{
+		if (!cub->error_message)
+		{
+			free(line);
+			ft_exit(cub, "Error\ninvalid header line\n", MAP_ERROR);
+		}
+	}
+	if (cub->error_message)
+	{
+		free(line);
+		ft_exit(cub, cub->error_message, MAP_ERROR);
+	}
+}
+
+static int	header_is_map_start(t_cub *cub, char *line)
+{
+	if (is_map_line(line))
+	{
+		cub->line = line;
+		return (1);
+	}
+	return (0);
+}
+
 static void	parse_headers(t_cub *cub)
 {
 	char	*line;
@@ -40,26 +67,9 @@ static void	parse_headers(t_cub *cub)
 	while (1)
 	{
 		line = next_non_empty_line(cub, line);
-		if (is_map_line(line))
-		{
-			cub->line = line;
+		if (header_is_map_start(cub, line))
 			return ;
-		}
-		if (!parse_header_line(cub, line))
-		{
-			if (!cub->error_message)
-			{
-				free(line);
-				line = NULL;
-				ft_exit(cub, "Error\ninvalid header line\n", MAP_ERROR);
-			}
-		}
-		if (cub->error_message)
-		{
-			free(line);
-			line = NULL;
-			ft_exit(cub, cub->error_message, MAP_ERROR);
-		}
+		handle_header_line(cub, line);
 		free(line);
 		line = NULL;
 	}
@@ -70,3 +80,41 @@ void	parsing(t_cub *cub)
 	parse_headers(cub);
 	parse_map(cub);
 }
+
+// static void	parse_headers(t_cub *cub)
+// {
+// 	char	*line;
+
+// 	line = cub->line;
+// 	cub->line = NULL;
+// 	while (1)
+// 	{
+// 		line = next_non_empty_line(cub, line);
+// 		if (is_map_line(line))
+// 		{
+// 			cub->line = line;
+// 			return ;
+// 		}
+// 		cub->line = line;
+// 		if (!parse_header_line(cub, line))
+// 		{
+// 			if (!cub->error_message)
+// 			{
+// 				cub->line = NULL;
+// 				free(line);
+// 				line = NULL;
+// 				ft_exit(cub, "Error\ninvalid header line\n", MAP_ERROR);
+// 			}
+// 		}
+// 		if (cub->error_message)
+// 		{
+// 			cub->line = NULL;
+// 			free(line);
+// 			line = NULL;
+// 			ft_exit(cub, cub->error_message, MAP_ERROR);
+// 		}
+// 		cub->line = NULL;
+// 		free(line);
+// 		line = NULL;
+// 	}
+// }

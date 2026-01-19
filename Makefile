@@ -22,6 +22,7 @@ SRC = \
 	$(SRC_DIR)/parsing/parsing_header.c \
 	$(SRC_DIR)/parsing/check_textures.c \
 	$(SRC_DIR)/parsing/map_validation.c \
+	$(SRC_DIR)/parsing/map_validation_utils.c \
 	$(SRC_DIR)/parsing/map_helpers.c \
 	$(SRC_DIR)/parsing/flood_fill.c \
 	$(SRC_DIR)/parsing/build_map.c \

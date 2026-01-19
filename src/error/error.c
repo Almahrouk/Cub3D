@@ -29,6 +29,7 @@ void	ft_exit(t_cub *cub, char *message, int err_no)
 		free(cub->error_message);
 		cub->error_message = NULL;
 	}
+	gnl_cleanup();
 	free_memory(cub);
 	exit(err_no);
 }

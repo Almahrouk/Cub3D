@@ -48,8 +48,8 @@ static void	ff_expand(t_ff *ff)
 	int	x;
 	int	y;
 
-	ff->x;
-	ff->y;
+	x = ff->x;
+	y = ff->y;
 	try_push(ff, x - 1, y);
 	try_push(ff, x + 1, y);
 	try_push(ff, x, y - 1);
