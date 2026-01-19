@@ -44,7 +44,7 @@ void	check_duplicates(t_cub *cub)
 
 static void	check_texture_files(t_cub *cub)
 {
-	check_textures_paths(cub, cub->data->no ,
+	check_textures_paths(cub, cub->data->no,
 		"Error\nnorth texture must be .png or .xpm\n");
 	check_textures_paths(cub, cub->data->so,
 		"Error\nsouth texture must be .png or .xpm\n");
@@ -55,10 +55,14 @@ static void	check_texture_files(t_cub *cub)
 	check_duplicates(cub);
 	if (!cub->test_mode)
 	{
-		check_textures_open(cub, cub->data->no, "Error\nopening north texture\n");
-		check_textures_open(cub, cub->data->so, "Error\nopening south texture\n");
-		check_textures_open(cub, cub->data->we, "Error\nopening west texture\n");
-		check_textures_open(cub, cub->data->ea, "Error\nopening east texture\n");
+		check_textures_open(cub, cub->data->no,
+			"Error\nopening north texture\n");
+		check_textures_open(cub, cub->data->so,
+			"Error\nopening south texture\n");
+		check_textures_open(cub, cub->data->we,
+			"Error\nopening west texture\n");
+		check_textures_open(cub, cub->data->ea,
+			"Error\nopening east texture\n");
 	}
 }
 

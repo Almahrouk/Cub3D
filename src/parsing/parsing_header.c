@@ -52,7 +52,7 @@ uint32_t	parse_rgb(t_cub *cub, char *str)
 		|| !is_valid_rgb_str(part[2]))
 	{
 		ft_free_split_recursive(part, 0);
-		ft_exit(cub, "Error\ncolor values must be 0-255 and numeric\n", INPUT_ERROR);
+		ft_exit(cub, "Error\ncolor value must be 0-255 and num\n", INPUT_ERROR);
 	}
 	r = ft_atoi(part[0]);
 	g = ft_atoi(part[1]);

@@ -57,28 +57,6 @@ void	check_map_content(t_cub *cub)
 	}
 }
 
-// static void	check_map_closure(t_cub *cub)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	y = 0;
-// 	while (y < cub->map_h)
-// 	{
-// 		x = 0;
-// 		while (x < cub->map_w)
-// 		{
-// 			if (cub->map[y][x] == '0' || cub->map[y][x] == ' ')
-// 			{
-// 				if (x == 0 || x == cub->map_w - 1 || y == 0 || y == cub->map_h - 1)
-// 					ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
-// 			}
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-
 static void	check_map_filled(t_cub *cub)
 {
 	int	x;
@@ -88,10 +66,10 @@ static void	check_map_filled(t_cub *cub)
 	{
 		for (x = 0; x < cub->map_w; x++)
 		{
-			if (cub->map[y][x] == '0') // reachable empty space
+			if (cub->map[y][x] == '0')
 			{
-				// if next to space or outside map => not closed
-				if (x == 0 || y == 0 || x == cub->map_w - 1 || y == cub->map_h - 1
+				if (x == 0 || y == 0 || x == cub->map_w - 1
+					|| y == cub->map_h - 1
 					|| cub->map[y][x - 1] == ' '
 					|| cub->map[y][x + 1] == ' '
 					|| cub->map[y - 1][x] == ' '
@@ -108,16 +86,9 @@ void	validate_map(t_cub *cub)
 {
 	if (!cub->map || cub->map_h == 0 || cub->map_w == 0)
 		map_error(cub, "Error\nempty map\n");
-
 	check_map_content(cub);
-
-	// flood fill from player position
 	flood_fill(cub, cub->data->player_x, cub->data->player_y);
-
-	// after fill, check if any 0 touches a space or edge
 	check_map_filled(cub);
-
-	// optional: restore map if needed
 	for (int y = 0; y < cub->map_h; y++)
 		for (int x = 0; x < cub->map_w; x++)
 			if (cub->map[y][x] == 'F')
@@ -140,32 +111,26 @@ void	parse_map(t_cub *cub)
 	{
 		strip_line_end(line);
 		normalize_tabs(line);
-
 		if (is_line_empty(line))
 		{
 			if (map_started)
-				map_ended = true; // reached end of map
+				map_ended = true;
 			free(line);
 			line = NULL;
-			continue;
+			continue ;
 		}
-
 		if (map_ended)
 		{
-			// any non-empty line after the map ends is invalid
 			free(line);
 			ft_lstclear(&lines, free);
 			ft_exit(cub, "Error\nmap invalid\n", MAP_ERROR);
 		}
-
 		map_started = true;
 		ft_lstadd_back(&lines, ft_lstnew(line));
 		line = NULL;
 	}
-
 	if (!lines)
 		map_error(cub, "Error\nmissing map\n");
-
 	build_map(cub, lines);
 	ft_lstclear(&lines, free);
 	validate_map(cub);

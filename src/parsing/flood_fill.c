@@ -45,9 +45,11 @@ static void	try_push(t_ff *ff, int x, int y)
 
 static void	ff_expand(t_ff *ff)
 {
-	int	x = ff->x;
-	int	y = ff->y;
+	int	x;
+	int	y;
 
+	ff->x;
+	ff->y;
 	try_push(ff, x - 1, y);
 	try_push(ff, x + 1, y);
 	try_push(ff, x, y - 1);
@@ -57,8 +59,6 @@ static void	ff_expand(t_ff *ff)
 	try_push(ff, x - 1, y + 1);
 	try_push(ff, x + 1, y + 1);
 }
-
-
 
 void	flood_fill(t_cub *cub, int start_x, int start_y)
 {
@@ -86,4 +86,3 @@ void	flood_fill(t_cub *cub, int start_x, int start_y)
 	}
 	ff_free(&ff);
 }
-
