@@ -12,11 +12,24 @@
 
 #include "cub3D.h"
 
-static int	is_valid_rgb(int r, int g, int b)
+static int	is_valid_rgb_str(const char *s)
 {
-	if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255)
-		return (1);
-	return (0);
+	int	i;
+	int	num;
+
+	if (!s || !*s)
+		return (0);
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
+	}
+	num = ft_atoi(s);
+	if (num < 0 || num > 255)
+		return (0);
+	return (1);
 }
 
 uint32_t	parse_rgb(t_cub *cub, char *str)
@@ -35,14 +48,15 @@ uint32_t	parse_rgb(t_cub *cub, char *str)
 			ft_free_split_recursive(part, 0);
 		ft_exit(cub, "Error\ninvalid color format\n", INPUT_ERROR);
 	}
+	if (!is_valid_rgb_str(part[0]) || !is_valid_rgb_str(part[1])
+		|| !is_valid_rgb_str(part[2]))
+	{
+		ft_free_split_recursive(part, 0);
+		ft_exit(cub, "Error\ncolor values must be 0-255 and numeric\n", INPUT_ERROR);
+	}
 	r = ft_atoi(part[0]);
 	g = ft_atoi(part[1]);
 	b = ft_atoi(part[2]);
-	if (!is_valid_rgb(r, g, b))
-	{
-		ft_free_split_recursive(part, 0);
-		ft_exit(cub, "Error\ncolor values must be 0-255\n", INPUT_ERROR);
-	}
 	ft_free_split_recursive(part, 0);
 	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 }
