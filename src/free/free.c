@@ -23,3 +23,19 @@ void	ff_free(t_ff *ff)
 	ff->stack_y = NULL;
 	ff->visited = NULL;
 }
+
+void	ft_free(char **s)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		s[i] = NULL;
+		i++;
+	}
+	free(s);
+}

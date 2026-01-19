@@ -82,36 +82,92 @@ void	validate_map(t_cub *cub)
 	flood_fill(cub, cub->data->player_x, cub->data->player_y);
 }
 
+// void	parse_map(t_cub *cub)
+// {
+// 	char	*line;
+// 	t_list	*lines;
+// 	int		map_started;
+
+// 	lines = NULL;
+// 	line = cub->line;
+// 	map_started = 0;
+// 	cub->line = NULL;
+// 	while (line)
+// 	{
+// 		strip_line_end(line);
+// 		normalize_tabs(line);
+// 		if (is_line_empty(line))
+// 		{
+// 			if (map_started)
+// 			{
+// 				free(line);
+// 				ft_exit(cub, "Error\nmap duplicate\n", MAP_ERROR);
+// 			}
+// 			free(line);
+// 			line = get_next_line(cub->fd);
+// 			continue ;
+// 		}
+// 		if (!map_started)
+// 			map_started = 1;
+// 		ft_lstadd_back(&lines, ft_lstnew(line));
+
+// 		line = get_next_line(cub->fd);
+// 	}
+// 	build_map(cub, lines);
+// 	validate_map(cub);
+// }
+
+
+t_list	*list_from_split(char **lines)
+{
+	t_list	*lst;
+	int		i;
+
+	lst = NULL;
+	i = 0;
+	while (lines[i])
+	{
+		if (!is_line_empty(lines[i]))
+		{
+			ft_lstadd_back(&lst,
+				ft_lstnew(ft_strdup(lines[i])));
+		}
+		i++;
+	}
+	return (lst);
+}
+
+
 void	parse_map(t_cub *cub)
 {
-	char	*line;
-	t_list	*lines;
+	char	**lines;
+	int		i;
 	int		map_started;
 
-	lines = NULL;
-	line = cub->line;
+	lines = ft_split(cub->line, '\n');
+	if (!lines)
+		map_error(cub, "Error\nmalloc failed\n");
 	map_started = 0;
-	cub->line = NULL;
-	while (line)
+	i = 0;
+	while (lines[i])
 	{
-		strip_line_end(line);
-		normalize_tabs(line);
-		if (is_line_empty(line))
+		strip_line_end(lines[i]);
+		normalize_tabs(lines[i]);
+		if (is_line_empty(lines[i]))
 		{
 			if (map_started)
 			{
-				free(line);
-				ft_exit(cub, "Error\nmap duplicate\n", MAP_ERROR);
+				ft_free(lines);
+				map_error(cub, "Error\nmap duplicate\n");
 			}
-			free(line);
-			line = get_next_line(cub->fd);
+			i++;
 			continue ;
 		}
-		if (!map_started)
-			map_started = 1;
-		ft_lstadd_back(&lines, ft_lstnew(line));
-		line = get_next_line(cub->fd);
+		map_started = 1;
+		i++;
 	}
-	build_map(cub, lines);
+	build_map(cub, list_from_split(lines));
+	ft_free(lines);
 	validate_map(cub);
 }
+

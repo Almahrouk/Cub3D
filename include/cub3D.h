@@ -172,7 +172,6 @@ int				init_game(t_cub *game);
 
 void			init(t_cub *cub);
 void			init_cub(int ac, char **av, t_cub *cub);
-void			print_bad(char *path, char *msg);
 
 void			check_file(t_cub *cub);
 void			check_input(int ac, char **av, t_cub *map);
@@ -231,8 +230,7 @@ void	free_map(t_cub *cub);
 void	free_data(t_cub *cub);
 void	free_textures(t_cub *cub);
 void	free_mlx(t_cub *cub);
-void	ft_exit_input(t_cub *cub, char *message, int err_no);
-void	ft_exit_game(t_cub *cub, char *message, int err_no);
+void	ft_free(char **s);
 
 
 #endif
