@@ -74,12 +74,15 @@ int	init_game(t_cub *game)
 
 int	main(int ac, char **av)
 {
-	t_cub	cub;
+	t_cub	*cub;
 
-	init_cub(ac, av, &cub);
-	parsing(&cub);
-	check_textures(&cub);
-	init_game(&cub);
-	free_memory(&cub);
+	cub = malloc(sizeof(t_cub));
+	if (!cub)
+		return (EXIT_FAILURE);
+	init_cub(ac, av, cub);
+	parsing(cub);
+	check_textures(cub);
+	init_game(cub);
+	free_memory(cub);
 	return (EXIT_SUCCESS);
 }

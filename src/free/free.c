@@ -14,7 +14,12 @@
 
 void	ff_free(t_ff *ff)
 {
+	if (!ff)
+		return ;
 	free(ff->stack_x);
 	free(ff->stack_y);
 	free(ff->visited);
+	ff->stack_x = NULL;
+	ff->stack_y = NULL;
+	ff->visited = NULL;
 }

@@ -52,15 +52,15 @@ void	parse_texture(t_cub *cub, char **dest, char *line, int i)
 	int		start;
 	char	*tmp;
 
-	if (line[i + 2] != ' ' && line[i + 2] != '\t')
+	if (line[i + 2] != ' ')
 		ft_exit(cub, "Error\ninvalid texture path\n", PARSEING_TEXTURE_ERROR);
 	i += 2;
-	while (line[i] == ' ' || line[i] == '\t')
+	while (line[i] == ' ')
 		i++;
 	if (line[i] == '\0')
 		ft_exit(cub, "Error\nmissing texture path\n", PARSEING_TEXTURE_ERROR);
 	start = i;
-	while (line[i] && line[i] != ' ' && line[i] != '\t')
+	while (line[i] && line[i] != ' ')
 		i++;
 	tmp = ft_substr(line, start, i - start);
 	if (!tmp)
@@ -68,7 +68,7 @@ void	parse_texture(t_cub *cub, char **dest, char *line, int i)
 	if (*dest)
 		free(*dest);
 	*dest = tmp;
-	while (line[i] == ' ' || line[i] == '\t')
+	while (line[i] == ' ')
 		i++;
 	if (line[i] != '\0')
 		ft_exit(cub, "Error\ninvalid texture path\n", PARSEING_TEXTURE_ERROR);
@@ -79,16 +79,16 @@ void	parse_color(t_cub *cub, char **dest, char *line, int i)
 	int	start;
 	int	end;
 
-	if (line[i + 1] != ' ' && line[i + 1] != '\t')
+	if (line[i + 1] != ' ')
 		ft_exit(cub, "Error\ninvalid color format\n", PARSEING_TEXTURE_ERROR);
 	i += 1;
-	while (line[i] == ' ' || line[i] == '\t')
+	while (line[i] == ' ')
 		i++;
 	if (line[i] == '\0')
 		ft_exit(cub, "Error\nmissing color value\n", PARSEING_TEXTURE_ERROR);
 	start = i;
 	end = ft_strlen(line);
-	while (end > start && (line[end - 1] == ' ' || line[end - 1] == '\t'))
+	while (end > start && (line[end - 1] == ' '))
 		end--;
 	*dest = ft_substr(line, start, end - start);
 	if (!*dest)

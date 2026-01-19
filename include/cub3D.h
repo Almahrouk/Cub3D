@@ -38,6 +38,7 @@ typedef enum e_error
 {
 	SUCCESS,
 	FAILD,
+	MALLOC_FAILED,
 	INPUT_ERROR,
 	OPEN_FILE_ERROR,
 	EMPTY_FILE_ERROR,
@@ -178,7 +179,6 @@ void			check_file(t_cub *cub);
 void			check_input(int ac, char **av, t_cub *map);
 
 void			ft_exit(t_cub *cub, char *message, int errno);
-void			ft_exit_input(char *message, int errno);
 
 void			parsing(t_cub *cub);
 void			check_textures(t_cub *cub);
@@ -228,5 +228,11 @@ void			calculate_delta_dist(t_dda *ray);
 void			calculate_dist_2side(t_cub *game, t_dda *ray);
 void			dda_algo(t_cub *game, t_dda *ray);
 void    try_move(t_cub *game, float new_x, float new_y);
+void	free_map(t_cub *cub);
+void	free_data(t_cub *cub);
+void	free_textures(t_cub *cub);
+void	free_mlx(t_cub *cub);
+void	ft_exit_input(t_cub *cub, char *message, int err_no);
+
 
 #endif

@@ -60,7 +60,7 @@ void	init_cub(int ac, char **av, t_cub *cub)
 	init(cub);
 	cub->data = ft_calloc(1, sizeof(t_data));
 	if (!cub->data)
-		ft_exit(cub, "malloc failed", FAILD);
+		ft_exit(cub, "malloc failed", MALLOC_FAILED); // ??
 	init_data(cub);
 	check_input(ac, av, cub);
 	check_file(cub);

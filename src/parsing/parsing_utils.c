@@ -28,7 +28,7 @@ void	normalize_tabs(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '\t' || line[i] == '\r')
+		if (line[i] == '\r')
 			line[i] = ' ';
 		i++;
 	}
@@ -41,7 +41,7 @@ int	is_line_empty(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '\t')
+		if (line[i] != ' ')
 			return (0);
 		i++;
 	}

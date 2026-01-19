@@ -28,38 +28,37 @@ static void	ff_init(t_cub *cub, t_ff *ff, int start_x, int start_y)
 	ff->top++;
 }
 
-static void	ff_push(t_ff *ff, int x, int y)
+static void	try_push(t_ff *ff, int x, int y)
 {
+	int	idx;
+
+	if (x < 0 || y < 0 || x >= ff->w || y >= ff->h)
+		return ;
+	idx = y * ff->w + x;
+	if (ff->visited[idx])
+		return ;
+	ff->visited[idx] = 1;
 	ff->stack_x[ff->top] = x;
 	ff->stack_y[ff->top] = y;
 	ff->top++;
 }
 
-static void	ff_check_cell(t_cub *cub, t_ff *ff)
-{
-	if (ff->x < 0 || ff->y < 0 || ff->x >= ff->w || ff->y >= ff->h)
-		map_error(cub, "Error\nmap is not closed\n");
-	ff->idx = ff->y * ff->w + ff->x;
-	if (ff->visited[ff->idx])
-		return ;
-	if (cub->map[ff->y][ff->x] == ' ')
-		map_error(cub, "Error\nmap is not closed\n");
-	if (cub->map[ff->y][ff->x] == '1')
-		return ;
-	ff->visited[ff->idx] = 1;
-}
-
 static void	ff_expand(t_ff *ff)
 {
-	if (ff->x > 0 && !ff->visited[ff->idx - 1])
-		ff_push(ff, ff->x - 1, ff->y);
-	if (ff->x < ff->w - 1 && !ff->visited[ff->idx + 1])
-		ff_push(ff, ff->x + 1, ff->y);
-	if (ff->y > 0 && !ff->visited[ff->idx - ff->w])
-		ff_push(ff, ff->x, ff->y - 1);
-	if (ff->y < ff->h - 1 && !ff->visited[ff->idx + ff->w])
-		ff_push(ff, ff->x, ff->y + 1);
+	int	x = ff->x;
+	int	y = ff->y;
+
+	try_push(ff, x - 1, y);
+	try_push(ff, x + 1, y);
+	try_push(ff, x, y - 1);
+	try_push(ff, x, y + 1);
+	try_push(ff, x - 1, y - 1);
+	try_push(ff, x + 1, y - 1);
+	try_push(ff, x - 1, y + 1);
+	try_push(ff, x + 1, y + 1);
 }
+
+
 
 void	flood_fill(t_cub *cub, int start_x, int start_y)
 {
@@ -70,10 +69,21 @@ void	flood_fill(t_cub *cub, int start_x, int start_y)
 	{
 		ff.x = ff.stack_x[--ff.top];
 		ff.y = ff.stack_y[ff.top];
-		ff_check_cell(cub, &ff);
-		if (!ff.visited[ff.idx])
+		if (ff.x < 0 || ff.y < 0
+			|| ff.x >= ff.w || ff.y >= ff.h)
+		{
+			ff_free(&ff);
+			ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
+		}
+		if (cub->map[ff.y][ff.x] == ' ')
+		{
+			ff_free(&ff);
+			ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
+		}
+		if (cub->map[ff.y][ff.x] == '1')
 			continue ;
 		ff_expand(&ff);
 	}
 	ff_free(&ff);
 }
+

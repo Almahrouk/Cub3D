@@ -69,14 +69,14 @@ void	validate_map(t_cub *cub)
 	while (x < cub->map_w)
 	{
 		if (cub->map[0][x] == '0' || cub->map[cub->map_h - 1][x] == '0')
-			map_error(cub, "Error\nmap is not closed\n");
+			ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
 		x++;
 	}
 	y = 0;
 	while (y < cub->map_h)
 	{
 		if (cub->map[y][0] == '0' || cub->map[y][cub->map_w - 1] == '0')
-			map_error(cub, "Error\nmap is not closed\n");
+			ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
 		y++;
 	}
 	flood_fill(cub, cub->data->player_x, cub->data->player_y);
@@ -86,9 +86,11 @@ void	parse_map(t_cub *cub)
 {
 	char	*line;
 	t_list	*lines;
+	int		map_started;
 
 	lines = NULL;
 	line = cub->line;
+	map_started = 0;
 	cub->line = NULL;
 	while (line)
 	{
@@ -96,10 +98,17 @@ void	parse_map(t_cub *cub)
 		normalize_tabs(line);
 		if (is_line_empty(line))
 		{
+			if (map_started)
+			{
+				free(line);
+				ft_exit(cub, "Error\nmap duplicate\n", MAP_ERROR);
+			}
 			free(line);
 			line = get_next_line(cub->fd);
 			continue ;
 		}
+		if (!map_started)
+			map_started = 1;
 		ft_lstadd_back(&lines, ft_lstnew(line));
 		line = get_next_line(cub->fd);
 	}

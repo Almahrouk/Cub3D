@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-static void	free_map(t_cub *cub)
+void	free_map(t_cub *cub)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ static void	free_map(t_cub *cub)
 	cub->map = NULL;
 }
 
-static void	free_data(t_cub *cub)
+void	free_data(t_cub *cub)
 {
 	if (!cub || !cub->data)
 		return ;
@@ -42,7 +42,7 @@ static void	free_data(t_cub *cub)
 	cub->data = NULL;
 }
 
-static void	free_textures(t_cub *cub)
+void	free_textures(t_cub *cub)
 {
 	if (!cub)
 		return ;
@@ -60,7 +60,7 @@ static void	free_textures(t_cub *cub)
 	cub->east_t = NULL;
 }
 
-static void	free_mlx(t_cub *cub)
+void	free_mlx(t_cub *cub)
 {
 	if (!cub)
 		return ;
@@ -80,5 +80,10 @@ void	free_memory(t_cub *cub)
 	free_data(cub);
 	free_textures(cub);
 	free_mlx(cub);
+	if (cub->line)
+		free(cub->line);
+	cub->line = NULL;
+	if (cub->fd >= 0)
+    	close(cub->fd);
 	free(cub);
 }

@@ -48,10 +48,14 @@ static void	parse_headers(t_cub *cub)
 		if (!parse_header_line(cub, line))
 		{
 			if (!cub->error_message)
-				map_error(cub, "Error\ninvalid header line\n");
+			{
+				free(line);
+				line = NULL;
+				ft_exit(cub, "Error\ninvalid header line\n", MAP_ERROR);
+			}
 		}
 		if (cub->error_message)
-			map_error(cub, cub->error_message);
+			ft_exit(cub, cub->error_message, MAP_ERROR);
 		free(line);
 		line = NULL;
 	}

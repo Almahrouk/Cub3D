@@ -23,14 +23,15 @@ void	ft_exit(t_cub *cub, char *message, int err_no)
 		return ;
 	}
 	if (message)
-		perror(message);
+		write(2, message, ft_strlen(message));
 	free_memory(cub);
 	exit(err_no);
 }
 
-void	ft_exit_input(char *message, int err_no)
+void	ft_exit_input(t_cub *cub, char *message, int err_no)
 {
-	write(1, message, ft_strlen(message));
+	write(2, message, ft_strlen(message));
+	free_data(cub);
 	exit(err_no);
 }
 

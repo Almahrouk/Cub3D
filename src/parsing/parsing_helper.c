@@ -75,7 +75,7 @@ int	parse_header_line(t_cub *cub, char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
+	while (line[i] == ' ')
 		i++;
 	if (line[i] == '\0')
 		return (1);
