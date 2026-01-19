@@ -57,65 +57,72 @@ void	check_map_content(t_cub *cub)
 	}
 }
 
-void	validate_map(t_cub *cub)
+// static void	check_map_closure(t_cub *cub)
+// {
+// 	int	x;
+// 	int	y;
+
+// 	y = 0;
+// 	while (y < cub->map_h)
+// 	{
+// 		x = 0;
+// 		while (x < cub->map_w)
+// 		{
+// 			if (cub->map[y][x] == '0' || cub->map[y][x] == ' ')
+// 			{
+// 				if (x == 0 || x == cub->map_w - 1 || y == 0 || y == cub->map_h - 1)
+// 					ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
+// 			}
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+
+static void	check_map_filled(t_cub *cub)
 {
 	int	x;
 	int	y;
 
-	if (!cub->map || cub->map_h == 0 || cub->map_w == 0)
-		map_error(cub, "Error\nempty map\n");
-	check_map_content(cub);
-	x = 0;
-	while (x < cub->map_w)
+	for (y = 0; y < cub->map_h; y++)
 	{
-		if (cub->map[0][x] == '0' || cub->map[cub->map_h - 1][x] == '0')
-			ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
-		x++;
+		for (x = 0; x < cub->map_w; x++)
+		{
+			if (cub->map[y][x] == '0') // reachable empty space
+			{
+				// if next to space or outside map => not closed
+				if (x == 0 || y == 0 || x == cub->map_w - 1 || y == cub->map_h - 1
+					|| cub->map[y][x - 1] == ' '
+					|| cub->map[y][x + 1] == ' '
+					|| cub->map[y - 1][x] == ' '
+					|| cub->map[y + 1][x] == ' ')
+				{
+					ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
+				}
+			}
+		}
 	}
-	y = 0;
-	while (y < cub->map_h)
-	{
-		if (cub->map[y][0] == '0' || cub->map[y][cub->map_w - 1] == '0')
-			ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
-		y++;
-	}
-	flood_fill(cub, cub->data->player_x, cub->data->player_y);
 }
 
-// void	parse_map(t_cub *cub)
-// {
-// 	char	*line;
-// 	t_list	*lines;
-// 	int		map_started;
+void	validate_map(t_cub *cub)
+{
+	if (!cub->map || cub->map_h == 0 || cub->map_w == 0)
+		map_error(cub, "Error\nempty map\n");
 
-// 	lines = NULL;
-// 	line = cub->line;
-// 	map_started = 0;
-// 	cub->line = NULL;
-// 	while (line)
-// 	{
-// 		strip_line_end(line);
-// 		normalize_tabs(line);
-// 		if (is_line_empty(line))
-// 		{
-// 			if (map_started)
-// 			{
-// 				free(line);
-// 				ft_exit(cub, "Error\nmap invalid\n", MAP_ERROR);
-// 			}
-// 			free(line);
-// 			line = get_next_line(cub->fd);
-// 			continue ;
-// 		}
-// 		if (!map_started)
-// 			map_started = 1;
-// 		ft_lstadd_back(&lines, ft_lstnew(line));
+	check_map_content(cub);
 
-// 		line = get_next_line(cub->fd);
-// 	}
-// 	build_map(cub, lines);
-// 	validate_map(cub);
-// }
+	// flood fill from player position
+	flood_fill(cub, cub->data->player_x, cub->data->player_y);
+
+	// after fill, check if any 0 touches a space or edge
+	check_map_filled(cub);
+
+	// optional: restore map if needed
+	for (int y = 0; y < cub->map_h; y++)
+		for (int x = 0; x < cub->map_w; x++)
+			if (cub->map[y][x] == 'F')
+				cub->map[y][x] = '0';
+}
 
 void	parse_map(t_cub *cub)
 {
