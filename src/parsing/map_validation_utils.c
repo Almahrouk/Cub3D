@@ -14,6 +14,8 @@
 
 void	handle_player_tile(t_cub *cub, int x, int y, int *player_count)
 {
+	if (x == 0 || y == 0 || x == cub->map_w - 1 || y == cub->map_h - 1)
+		map_error(cub, "Error\nplayer on edge\n");
 	(*player_count)++;
 	cub->data->player_x = x;
 	cub->data->player_y = y;

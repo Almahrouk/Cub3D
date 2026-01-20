@@ -23,8 +23,8 @@ void	check_map_filled(t_cub *cub)
 		x = 0;
 		while (x < cub->map_w)
 		{
-			if (cub->map[y][x] != '0')
-				return ;
+			if (cub->map[y][x] == '0')
+				ft_exit(cub, "Error\nunreachable area in map\n", MAP_ERROR);
 			if (is_invalid_neighbor(cub, x, y))
 				ft_exit(cub, "Error\nmap is not closed\n", MAP_ERROR);
 			x++;

@@ -82,6 +82,8 @@ void	flood_fill(t_cub *cub, int start_x, int start_y)
 		}
 		if (cub->map[ff.y][ff.x] == '1')
 			continue ;
+		if (cub->map[ff.y][ff.x] == '0')
+			cub->map[ff.y][ff.x] = 'F';
 		ff_expand(&ff);
 	}
 	ff_free(&ff);
