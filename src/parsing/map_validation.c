@@ -60,45 +60,63 @@ void	validate_map(t_cub *cub)
 
 void	parse_map(t_cub *cub)
 {
-	char	*line;
-	t_list	*lines;
-	bool	map_started;
-	bool	map_ended;
+	t_map_parser	p;
 
-	lines = NULL;
-	line = cub->line;
+	p.lines = NULL;
+	p.line = cub->line;
 	cub->line = NULL;
-	map_started = false;
-	map_ended = false;
-	while (1)
-	{
-		if (!line)
-			line = get_next_line(cub->fd);
-		if (!line)
-			break ;
-		strip_line_end(line);
-		normalize_tabs(line);
-		if (is_line_empty(line))
-		{
-			if (map_started)
-				map_ended = true;
-			free(line);
-			line = NULL;
-			continue ;
-		}
-		if (map_ended)
-		{
-			free(line);
-			ft_lstclear(&lines, free);
-			ft_exit(cub, "Error\nmap invalid\n", MAP_ERROR);
-		}
-		map_started = true;
-		ft_lstadd_back(&lines, ft_lstnew(line));
-		line = NULL;
-	}
-	if (!lines)
+	p.map_started = false;
+	p.map_ended = false;
+	while (read_next_line(cub, &p))
+		process_map_line(cub, &p);
+	if (!p.lines)
 		map_error(cub, "Error\nmissing map\n");
-	build_map(cub, lines);
-	ft_lstclear(&lines, free);
+	build_map(cub, p.lines);
+	ft_lstclear(&p.lines, free);
 	validate_map(cub);
 }
+
+// void	parse_map(t_cub *cub)
+// {
+// 	char	*line;
+// 	t_list	*lines;
+// 	bool	map_started;
+// 	bool	map_ended;
+
+// 	lines = NULL;
+// 	line = cub->line;
+// 	cub->line = NULL;
+// 	map_started = false;
+// 	map_ended = false;
+// 	while (1)
+// 	{
+// 		if (!line)
+// 			line = get_next_line(cub->fd);
+// 		if (!line)
+// 			break ;
+// 		strip_line_end(line);
+// 		normalize_tabs(line);
+// 		if (is_line_empty(line))
+// 		{
+// 			if (map_started)
+// 				map_ended = true;
+// 			free(line);
+// 			line = NULL;
+// 			continue ;
+// 		}
+// 		if (map_ended)
+// 		{
+// 			free(line);
+// 			ft_lstclear(&lines, free);
+// 			ft_exit(cub, "Error\nmap invalid\n", MAP_ERROR);
+// 		}
+// 		map_started = true;
+// 		ft_lstadd_back(&lines, ft_lstnew(line));
+// 		line = NULL;
+// 	}
+// 	if (!lines)
+// 		map_error(cub, "Error\nmissing map\n");
+// 	build_map(cub, lines);
+// 	ft_lstclear(&lines, free);
+// 	validate_map(cub);
+// }

@@ -96,6 +96,7 @@ static void	parse_headers(t_cub *cub)
 		line = NULL;
 	}
 }
+
 void	parsing(t_cub *cub)
 {
 	parse_headers(cub);

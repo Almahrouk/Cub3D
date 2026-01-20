@@ -74,9 +74,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
-char	*ft_strdup_gnl(const char *s1);
-char	*ft_strjoin_gnl(char const *s1, char const *s2);
-char	*ft_substr_gnl(char const *s, unsigned int start, size_t len);
 void	get_next_line_cleanup(void);
+char	*read_until_line(int fd, char *buffer, char *temp);
+// char	*read_temp(int fd, char *temp);
 
 #endif

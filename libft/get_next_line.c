@@ -48,7 +48,7 @@ static char	*extract_line(char *temp, int *start_next)
 	return (line);
 }
 
-static char	*read_until_line(int fd, char *buffer, char *temp)
+char	*read_until_line(int fd, char *buffer, char *temp)
 {
 	int		bytes;
 	char	*new_temp;

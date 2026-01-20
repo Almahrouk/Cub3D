@@ -145,6 +145,14 @@ typedef struct s_cub
 	mlx_texture_t	*east_t;
 }	t_cub;
 
+typedef struct s_map_parser
+{
+	char	*line;
+	t_list	*lines;
+	bool	map_started;
+	bool	map_ended;
+}	t_map_parser;
+
 typedef struct s_ff
 {
 	int		w;
@@ -232,5 +240,7 @@ void			free_textures(t_cub *cub);
 void			free_mlx(t_cub *cub);
 void			ft_free(char **s);
 int				is_invalid_neighbor(t_cub *cub, int x, int y);
+bool			read_next_line(t_cub *cub, t_map_parser *p);
+void			process_map_line(t_cub *cub, t_map_parser *p);
 
 #endif
