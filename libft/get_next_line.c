@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-static char *temp = NULL;
-
 static char	*keep_rest(char *temp, int start)
 {
 	char	*rest;
@@ -21,15 +19,19 @@ static char	*keep_rest(char *temp, int start)
 
 	len = ft_strlen(temp) - start;
 	if (len <= 0)
-		return (free(temp), (NULL));
+	{
+		free(temp);
+		return (NULL);
+	}
 	rest = ft_substr(temp, start, len);
-	return (free(temp), (rest));
+	free(temp);
+	return (rest);
 }
 
 static char	*extract_line(char *temp, int *start_next)
 {
-	char	*line;
 	int		i;
+	char	*line;
 
 	i = 0;
 	while (temp[i] && temp[i] != '\n')
@@ -39,26 +41,28 @@ static char	*extract_line(char *temp, int *start_next)
 	else
 	{
 		*start_next = i;
-		if (i == 0 && temp[i] == '\0')
+		if (i == 0)
 			return (NULL);
 	}
 	line = ft_substr(temp, 0, *start_next);
 	return (line);
 }
 
-static char	*new_line(int fd, char *buffer, char *temp)
+static char	*read_until_line(int fd, char *buffer, char *temp)
 {
-	int		read_bytes;
+	int		bytes;
 	char	*new_temp;
 
 	while (!ft_strchr(temp, '\n'))
 	{
-		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (read_bytes == 0 && temp[0] == '\0')
-			return (free(temp), (NULL));
-		if (read_bytes <= 0)
-			return (temp);
-		buffer[read_bytes] = '\0';
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes <= 0)
+		{
+			if (bytes == 0)
+				return (temp);
+			return (NULL);
+		}
+		buffer[bytes] = '\0';
 		new_temp = ft_strjoin(temp, buffer);
 		free(temp);
 		temp = new_temp;
@@ -68,37 +72,41 @@ static char	*new_line(int fd, char *buffer, char *temp)
 
 char	*get_next_line(int fd)
 {
+	static char	*temp;
 	char		*buffer;
 	char		*line;
 	int			start_next;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0)
+	{
+		free(temp);
+		temp = NULL;
+		return (NULL);
+	}
+	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	if (temp == NULL)
-		temp = ft_strdup("");
-	temp = new_line(fd, buffer, temp);
-	free(buffer);
 	if (!temp)
-		return (NULL);
-	line = extract_line(temp, &start_next);
-	if (!line)
+		temp = ft_strdup("");
+	temp = read_until_line(fd, buffer, temp);
+	free(buffer);
+	if (!temp || temp[0] == '\0')
 	{
 		free(temp);
 		temp = NULL;
 		return (NULL);
 	}
+	line = extract_line(temp, &start_next);
 	temp = keep_rest(temp, start_next);
 	return (line);
 }
 
-void	gnl_cleanup(void)
+void	get_next_line_cleanup(void)
 {
-	if (temp)
-	{
-		free(temp);
-		temp = NULL;
-	}
+	char	*dummy;
+
+	dummy = get_next_line(-1);
+	(void)dummy;
 }

@@ -69,8 +69,12 @@ void	parse_map(t_cub *cub)
 	cub->line = NULL;
 	map_started = false;
 	map_ended = false;
-	while (line || (line = get_next_line(cub->fd))) // need
+	while (1)
 	{
+		if (!line)
+			line = get_next_line(cub->fd);
+		if (!line)
+			break ;
 		strip_line_end(line);
 		normalize_tabs(line);
 		if (is_line_empty(line))
@@ -90,7 +94,6 @@ void	parse_map(t_cub *cub)
 		map_started = true;
 		ft_lstadd_back(&lines, ft_lstnew(line));
 		line = NULL;
-		// line = get_next_line(cub->fd);
 	}
 	if (!lines)
 		map_error(cub, "Error\nmissing map\n");
