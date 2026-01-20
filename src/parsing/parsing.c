@@ -37,12 +37,14 @@ static void	handle_header_line(t_cub *cub, char *line)
 	{
 		if (!cub->error_message)
 		{
+			cub->current_line = NULL;
 			free(line);
 			ft_exit(cub, "Error\ninvalid header line\n", MAP_ERROR);
 		}
 	}
 	if (cub->error_message)
 	{
+		cub->current_line = NULL;
 		free(line);
 		ft_exit(cub, cub->error_message, MAP_ERROR);
 	}

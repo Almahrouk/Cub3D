@@ -48,65 +48,41 @@ static char	*extract_line(char *temp, int *start_next)
 	return (line);
 }
 
-char	*read_until_line(int fd, char *buffer, char *temp)
+static char	*check_tmp(char *temp)
 {
-	int		bytes;
-	char	*new_temp;
-
-	while (!ft_strchr(temp, '\n'))
+	if (!temp || temp[0] == '\0')
 	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes <= 0)
-		{
-			if (bytes == 0)
-				return (temp);
-			return (NULL);
-		}
-		buffer[bytes] = '\0';
-		new_temp = ft_strjoin(temp, buffer);
 		free(temp);
-		temp = new_temp;
+		return (NULL);
 	}
 	return (temp);
 }
 
 char	*get_next_line(int fd)
 {
+	t_gnl		gnl;
 	static char	*temp;
-	char		*buffer;
-	char		*line;
-	int			start_next;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		free(temp);
-		temp = NULL;
+		if (fd < 0 && temp)
+		{
+			free(temp);
+			temp = NULL;
+		}
 		return (NULL);
 	}
-	if (BUFFER_SIZE <= 0)
-		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
+	gnl.buffer = malloc(BUFFER_SIZE + 1);
+	if (!gnl.buffer)
 		return (NULL);
 	if (!temp)
 		temp = ft_strdup("");
-	temp = read_until_line(fd, buffer, temp);
-	free(buffer);
-	if (!temp || temp[0] == '\0')
-	{
-		free(temp);
-		temp = NULL;
+	temp = read_until_line(fd, gnl.buffer, temp);
+	free(gnl.buffer);
+	temp = check_tmp(temp);
+	if (!temp)
 		return (NULL);
-	}
-	line = extract_line(temp, &start_next);
-	temp = keep_rest(temp, start_next);
-	return (line);
-}
-
-void	get_next_line_cleanup(void)
-{
-	char	*dummy;
-
-	dummy = get_next_line(-1);
-	(void)dummy;
+	gnl.line = extract_line(temp, &gnl.start_next);
+	temp = keep_rest(temp, gnl.start_next);
+	return (gnl.line);
 }
