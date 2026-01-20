@@ -16,6 +16,7 @@ void	init(t_cub *cub)
 {
 	cub->fd = -1;
 	cub->line = NULL;
+	cub->current_line = NULL;
 	cub->file_name = NULL;
 	cub->map = NULL;
 	cub->map_w = 0;

@@ -58,6 +58,23 @@ static int	header_is_map_start(t_cub *cub, char *line)
 	return (0);
 }
 
+// static void	parse_headers(t_cub *cub)
+// {
+// 	char	*line;
+
+// 	line = cub->line;
+// 	cub->line = NULL;
+// 	while (1)
+// 	{
+// 		line = next_non_empty_line(cub, line);
+// 		if (header_is_map_start(cub, line))
+// 			return ;
+// 		handle_header_line(cub, line);
+// 		free(line);
+// 		line = NULL;
+// 	}
+// }
+
 static void	parse_headers(t_cub *cub)
 {
 	char	*line;
@@ -66,15 +83,19 @@ static void	parse_headers(t_cub *cub)
 	cub->line = NULL;
 	while (1)
 	{
-		line = next_non_empty_line(cub, line);
+		cub->current_line = next_non_empty_line(cub, line);
+		line = cub->current_line;
 		if (header_is_map_start(cub, line))
+		{
+			cub->current_line = NULL;
 			return ;
+		}
 		handle_header_line(cub, line);
 		free(line);
+		cub->current_line = NULL;
 		line = NULL;
 	}
 }
-
 void	parsing(t_cub *cub)
 {
 	parse_headers(cub);

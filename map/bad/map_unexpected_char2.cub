@@ -3,11 +3,10 @@ SO texture/south_texture.xpm
 WE texture/west_texture.xpm
 EA texture/east_texture.xpm
 
-F
 F 20,20,20
 C 200,200,200
 
-11111
+10111
 10001
 10S01
 10001

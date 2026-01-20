@@ -126,6 +126,7 @@ typedef struct s_cub
 	int				error_code;
 	char			player_dir;
 	char			*line;
+	char			*current_line;
 	char			*file_name;
 	char			**map;
 	char			*error_message;
