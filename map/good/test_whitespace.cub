@@ -1,9 +1,23 @@
-NO texture/north_texture.xpm
-SO texture/south_texture.xpm
-WE texture/west_texture.xpm
-EA texture/east_texture.xpm
 
-F 20,2-0,20
+
+
+
+
+
+
+
+NO texture/north_texture.xpm
+
+
+
+
+
+
+SO texture/south_texture.xpm
+                        WE texture/west_texture.xpm
+        EA texture/east_texture.xpm
+
+        F 20,20,20
 C 200,200,200
 
 11111
@@ -19,3 +33,26 @@ C 200,200,200
 10001
 10001
 11111
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
